@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for fitApp ",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "mocha --recursive --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViktorTheFirst/fitnessApp.git"
+  },
+  "author": "Viktor Stepanenco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ViktorTheFirst/fitnessApp/issues"
+  },
+  "homepage": "https://github.com/ViktorTheFirst/fitnessApp#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.11",
+    "nodemon": "^2.0.3"
+  }
+}

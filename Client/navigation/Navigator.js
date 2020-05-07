@@ -1,5 +1,5 @@
 import React from "react";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createBottomTabNavigator } from "react-navigation-tabs";
@@ -10,6 +10,8 @@ import TrainersGrid from "../screens/Trainers/TrainersGrid";
 import TrainersInfoScreen from "..//screens/Trainers/TrainersInfoScreen";
 import CategoriesScreen from "../screens/Categories/CategoriesScreen";
 import FavoriteTrainersScreen from "../screens/FavoriteTrainersScreen";
+import LoginScreen from "..//screens/LoginScreen";
+import RegistrationScreen from "..//screens/RegistrationScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 const defaultStackNavOptions = {
@@ -88,7 +90,7 @@ const favTrainersNavigator = createStackNavigator(
   }
 );
 //========================================================================================
-const TabNavigator = createBottomTabNavigator(
+const tabNavigator = createBottomTabNavigator(
   {
     Trainers: {
       screen: TrainersNavigator,
@@ -121,10 +123,22 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 //========================================================================================
-const MainNavigator = createDrawerNavigator(
+const LoginRegisterNav = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Registration: RegistrationScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+//========================================================================================
+const drawerNavigator = createDrawerNavigator(
   {
     TabNav: {
-      screen: TabNavigator,
+      screen: tabNavigator,
       navigationOptions: {
         drawerLabel: "Home",
       },
@@ -151,5 +165,9 @@ const MainNavigator = createDrawerNavigator(
     },
   }
 );
-
-export default createAppContainer(MainNavigator);
+//========================================================================================
+const Navigator = createSwitchNavigator({
+  loginregister: LoginRegisterNav,
+  drawer: drawerNavigator,
+});
+export default createAppContainer(Navigator);

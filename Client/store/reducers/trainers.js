@@ -1,5 +1,5 @@
 import { TRAINERS } from "..//..//data/dummy-data";
-import { TOGGLE_FAVORITE } from "../actions/trainers";
+import { TOGGLE_FAVORITE } from "../actions/const";
 
 const initialState = {
   trainers: TRAINERS,

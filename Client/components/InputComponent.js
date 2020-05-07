@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 
 const InputComponent = (props) => {
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder={props.placeHolder}
@@ -14,11 +14,10 @@ const InputComponent = (props) => {
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
   },
   input: {
     width: "80%",
