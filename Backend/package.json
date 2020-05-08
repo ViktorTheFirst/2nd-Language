@@ -4,7 +4,8 @@
   "description": "backend for fitApp ",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "server": "nodemon server",
     "test": "mocha --recursive --exit"
   },
   "repository": {
@@ -15,6 +16,12 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ViktorTheFirst/fitnessApp/issues"
+  },
+  "engines": {
+    "node": "12.16.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   },
   "homepage": "https://github.com/ViktorTheFirst/fitnessApp#readme",
   "dependencies": {
