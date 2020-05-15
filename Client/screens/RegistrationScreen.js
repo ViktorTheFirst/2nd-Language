@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import bgImage from "../assets/images/fit_bg_2.jpg";
+
 import { useDispatch } from "react-redux";
 import { register } from "..//store/actions/authActions";
 import { LinearGradient } from "expo-linear-gradient";
@@ -43,6 +43,7 @@ const RegistrationScreen = (props) => {
       setError(err.message);
     }
   };
+
   return (
     <LinearGradient
       colors={["#251e4f", "#a79de3"]}

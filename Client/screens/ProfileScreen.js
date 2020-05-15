@@ -1,16 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
-import { USERS } from "../data/dummy-data";
-
-const renderUserData = (itemData) => {
-  return (
-    <View>
-      <Text>{itemData.item.age}</Text>
-    </View>
-  );
-};
+import { View, Text, StyleSheet, Image } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { getprofile } from "../store/actions/profileActions";
 
 const ProfileScreen = (props) => {
+  const [profileData, setProfileData] = useState({
+    name: "",
+    email: "",
+  });
+  const dispatch = useDispatch();
+
+  const stateData = useSelector((state) => state.authRed);
+
+  console.log("stateData:", stateData);
+  try {
+    useEffect(() => {
+      dispatch(getprofile());
+      setProfileData(stateData);
+    }, [stateData]);
+  } catch (err) {
+    throw err;
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
@@ -19,11 +31,10 @@ const ProfileScreen = (props) => {
           source={require("../assets/images/img_12.jpg")}
         />
       </View>
-      <FlatList numColumns={1} data={USERS} renderItem={renderUserData}>
-        <View style={styles.dataContainer}>
-          <Text>DATA</Text>
-        </View>
-      </FlatList>
+      <View>
+        <Text>Name: {profileData.name}</Text>
+        <Text>Email: {profileData.email}</Text>
+      </View>
     </View>
   );
 };

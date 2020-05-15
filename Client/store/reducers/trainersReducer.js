@@ -1,4 +1,4 @@
-import { TRAINERS } from "..//..//data/dummy-data";
+import { TRAINERS } from "../../data/dummy-data";
 import { TOGGLE_FAVORITE } from "../actions/const";
 
 const initialState = {

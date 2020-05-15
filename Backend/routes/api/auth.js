@@ -4,7 +4,6 @@ const User = require("..//../models/UserModel");
 const { registerValidation, loginValidation } = require("..//../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const verify = require("..//..//middleware/verifyToken");
 
 //===========================================================================================
 router.get("/", (req, res) => {
@@ -14,6 +13,8 @@ router.get("/", (req, res) => {
 router.post("/register", async (req, res) => {
   //validate user before creation
   const { error } = registerValidation(req.body);
+  //console.log(req.body);
+
   if (error) return res.status(400).send(error.details[0].message);
   try {
     //check if user email already in DB
@@ -41,31 +42,38 @@ router.post("/register", async (req, res) => {
       { expiresIn: 36000 },
       (err, token) => {
         if (err) throw err;
+        //console.log(token);
         res.json({ token });
       }
     );
   } catch (err) {
     res.status(400).send(err);
   }
-
-  //res.header("auth-token", token).send(token);
 });
 
 //===========================================================================================
 router.post("/login", async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  //console.log(process.env.TOKEN_SECRET);
+  if (error) return res.status(400).json({ errors: error.details[0].message });
 
   try {
     //check if email exists in DB
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Email doesn't exist");
+    if (!user)
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Invalid Login details" }] });
 
     //check if the password is correct
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send("Invalid Password");
+    if (!validPass)
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Invalid Login details" }] });
 
     const payload = { user: { id: user.id } };
+    //console.log(payload);
     //create and send token as a result
     jwt.sign(
       payload,
@@ -77,7 +85,7 @@ router.post("/login", async (req, res) => {
       }
     );
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 

@@ -1,10 +1,11 @@
-import { REGISTER } from "./const";
-const youripadress = "http://localhost:5000";
+import { REGISTER, LOGIN } from "./const";
+const youripadress = "http://192.168.0.86:5000";
+//const youripadress = "https://fitness2020.herokuapp.com";
 
-export const register = (data) => async (dispatch) => {
-  console.log("data in authActions:", data);
+//===========================================================================================
+export const login = (data) => async (dispatch) => {
   try {
-    const res = await fetch(`${youripadress}/api/auth/register`, {
+    const loginToken = await fetch(`${youripadress}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,17 +13,49 @@ export const register = (data) => async (dispatch) => {
       },
       body: JSON.stringify(data),
     });
-    console.log("res in authActions:", res);
-    if (!res.ok) {
-      const errorResData = await res.json();
-      let message = "Something went wrong!";
+
+    if (!loginToken.ok) {
+      const errorResData = await loginToken.json();
+      let message = "Login failed";
       if (errorResData && errorResData.errors.length > 0)
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
 
-    let json = await res.json();
-    console.log("json from actions:", json);
+    let jsonToken = await loginToken.json();
+
+    dispatch({
+      type: LOGIN,
+      payload: { token: jsonToken.token },
+    });
+    return jsonToken;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//===========================================================================================
+export const register = (data) => async (dispatch) => {
+  try {
+    const regToken = await fetch(`${youripadress}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!regToken.ok) {
+      const errorResData = await regToken.json();
+      let message = "Registration failed";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let json = await regToken.json();
+
     dispatch({
       type: REGISTER,
       payload: { token: json.token },

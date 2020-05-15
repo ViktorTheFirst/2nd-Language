@@ -5,8 +5,8 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
 import Navigator from "./navigation/Navigator";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import trainersReducer from "./store/reducers/trainers";
-import authReducers from ".//store/reducers/authReducers";
+import trainersReducer from "./store/reducers/trainersReducer";
+import authReducers from "./store/reducers/authReducers";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 

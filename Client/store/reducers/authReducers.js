@@ -1,4 +1,4 @@
-import { REGISTER } from "../actions/const";
+import { REGISTER, LOGIN, GET_PROFILE } from "../actions/const";
 
 const initialState = {
   token: "",
@@ -9,9 +9,17 @@ const initialState = {
 const authReducers = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER:
-      console.log(action.type);
       return { token: action.payload.token };
 
+    case LOGIN:
+      return { token: action.payload.token };
+
+    case GET_PROFILE:
+      return {
+        token: state.token,
+        email: action.payload.email,
+        name: action.payload.name,
+      };
     default:
       return state;
   }

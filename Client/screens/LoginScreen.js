@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,17 +8,34 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import bgImage from "../assets/images/fit_bg_6.jpg";
+import { login } from "..//store/actions/authActions";
 
 const { width: WIDTH } = Dimensions.get("window");
 
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
+  const loginHandler = async () => {
+    try {
+      await dispatch(login({ email, password })); //activates login in authActions
+      props.navigation.navigate("drawer");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <ImageBackground style={styles.backgroundContainer} source={bgImage}>
@@ -29,6 +46,8 @@ const LoginScreen = (props) => {
           placeholderTextColor={"rgba(255,255,255,0.7)"}
           style={styles.input}
           underlineColorAndroid="transparent"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
         />
       </View>
       <View style={styles.inputContainer}>
@@ -38,10 +57,12 @@ const LoginScreen = (props) => {
           placeholderTextColor={"rgba(255,255,255,0.7)"}
           style={styles.input}
           underlineColorAndroid="transparent"
+          onChangeText={(text) => setPassword(text)}
+          value={password}
         />
       </View>
 
-      <TouchableOpacity style={styles.btnLogin}>
+      <TouchableOpacity style={styles.btnLogin} onPress={loginHandler}>
         <Text style={styles.btnText}>Login</Text>
       </TouchableOpacity>
 

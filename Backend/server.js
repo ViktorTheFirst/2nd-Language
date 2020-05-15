@@ -12,7 +12,9 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 
 app.get("/", (req, res) => {
-  res.send("WE ARE AT HOME");
+  console.log("we are at home");
+  res.send("HOME");
+  //res.send(req.header);
 });
 
 const PORT = process.env.PORT || 5000;
