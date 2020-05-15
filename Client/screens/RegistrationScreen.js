@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { register } from "..//store/actions/authActions";
 import { LinearGradient } from "expo-linear-gradient";
 const { width: WIDTH } = Dimensions.get("window");
+import { getprofile } from "../store/actions/profileActions";
 
 const RegistrationScreen = (props) => {
   const [name, setName] = useState("");
@@ -38,6 +39,7 @@ const RegistrationScreen = (props) => {
     }
     try {
       await dispatch(register({ email, password, name })); //activates register in authActions
+      await dispatch(getprofile());
       props.navigation.navigate("drawer");
     } catch (err) {
       setError(err.message);

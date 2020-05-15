@@ -1,6 +1,6 @@
 import { REGISTER, LOGIN } from "./const";
-const youripadress = "http://192.168.0.86:5000";
-//const youripadress = "https://fitness2020.herokuapp.com";
+//const youripadress = "http://192.168.0.86:5000";
+const youripadress = "https://fitness2020.herokuapp.com";
 
 //===========================================================================================
 export const login = (data) => async (dispatch) => {

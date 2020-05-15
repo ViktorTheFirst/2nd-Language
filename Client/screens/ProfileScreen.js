@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getprofile } from "../store/actions/profileActions";
 
 const ProfileScreen = (props) => {
   const [profileData, setProfileData] = useState({
@@ -13,15 +12,9 @@ const ProfileScreen = (props) => {
 
   const stateData = useSelector((state) => state.authRed);
 
-  console.log("stateData:", stateData);
-  try {
-    useEffect(() => {
-      dispatch(getprofile());
-      setProfileData(stateData);
-    }, [stateData]);
-  } catch (err) {
-    throw err;
-  }
+  useEffect(() => {
+    setProfileData(stateData);
+  }, [stateData]);
 
   return (
     <View style={styles.screen}>

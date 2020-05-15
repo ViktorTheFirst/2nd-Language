@@ -1,13 +1,13 @@
 import { GET_PROFILE } from "./const";
-const youripadress = "http://192.168.0.86:5000";
-//const youripadress = "https://fitness2020.herokuapp.com";
+//const youripadress = "http://192.168.0.86:5000";
+const youripadress = "https://fitness2020.herokuapp.com";
 
 //===========================================================================================
 
 export const getprofile = () => async (dispatch, getState) => {
   try {
     const token = getState().authRed.token;
-    console.log("token in getprofile:", token);
+    //console.log("token in getprofile:", token);
     const res = await fetch(`${youripadress}/api/profile/getprofile`, {
       method: "GET",
       headers: {
@@ -18,7 +18,7 @@ export const getprofile = () => async (dispatch, getState) => {
     });
 
     const serverData = await res.json();
-    console.log("serverData in profileActions:", serverData);
+    //console.log("serverData in profileActions:", serverData);
     if (!res.ok) {
       const message = "profileActions error";
       if (serverData) message = serverData.msg;

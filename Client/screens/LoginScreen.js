@@ -13,6 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 import bgImage from "../assets/images/fit_bg_6.jpg";
 import { login } from "..//store/actions/authActions";
+import { getprofile } from "../store/actions/profileActions";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -31,6 +32,7 @@ const LoginScreen = (props) => {
   const loginHandler = async () => {
     try {
       await dispatch(login({ email, password })); //activates login in authActions
+      await dispatch(getprofile());
       props.navigation.navigate("drawer");
     } catch (err) {
       setError(err.message);
