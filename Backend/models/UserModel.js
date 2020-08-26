@@ -10,16 +10,20 @@ const UserSchema = mongoose.Schema({
     required: true,
     min: 6,
   },
-  addres: {
+  firstName: {
     type: String,
     required: false,
   },
-  name: {
+  lastName: {
     type: String,
     required: false,
   },
   age: {
     type: Number,
+    required: false,
+  },
+  avatar: {
+    type: String,
     required: false,
   },
 });

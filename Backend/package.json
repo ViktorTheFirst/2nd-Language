@@ -1,21 +1,21 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "backend for fitApp ",
+  "description": "backend for 2ndLanguage ",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "nodemon server.js",
     "server": "node server",
     "test": "mocha --recursive --exit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ViktorTheFirst/fitnessApp.git"
+    "url": "git+https://github.com/ViktorTheFirst/2ndLanguage.git"
   },
   "author": "Viktor Stepanenco",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ViktorTheFirst/fitnessApp/issues"
+    "url": "https://github.com/ViktorTheFirst/2ndLanguage/issues"
   },
   "engines": {
     "node": "12.16.1"
@@ -23,7 +23,7 @@
   "devDependencies": {
     "nodemon": "^2.0.3"
   },
-  "homepage": "https://github.com/ViktorTheFirst/fitnessApp#readme",
+  "homepage": "https://github.com/ViktorTheFirst/2ndLanguage#readme",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "bcryptjs": "^2.4.3",

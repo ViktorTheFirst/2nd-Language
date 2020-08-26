@@ -1,127 +1,16 @@
 import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { createDrawerNavigator } from "react-navigation-drawer";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import MainScreen from "../screens/MainScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import ScheduleScreen from "../screens/ScheduleScreen";
-import TrainersGrid from "../screens/Trainers/TrainersGrid";
-import TrainersInfoScreen from "..//screens/Trainers/TrainersInfoScreen";
-import CategoriesScreen from "../screens/Categories/CategoriesScreen";
-import FavoriteTrainersScreen from "../screens/FavoriteTrainersScreen";
-import LoginScreen from "..//screens/LoginScreen";
-import RegistrationScreen from "..//screens/RegistrationScreen";
-import { Ionicons } from "@expo/vector-icons";
+import { createAppContainer, createSwitchNavigator } from "react-navigation"; //wraps the main navigator
 
-const defaultStackNavOptions = {
-  //headerShown: false,
-  headerTitleAlign: "center",
-  headerTitleStyle: {
-    fontFamily: "dancing-script",
-    fontSize: 30,
-  },
-  headerStyle: {
-    backgroundColor: "#5288de",
-  },
-  headerTintColor: "white",
-};
-//========================================================================================
-const TrainersNavigator = createStackNavigator(
-  {
-    Main: {
-      screen: MainScreen,
-      navigationOptions: {
-        /* headerShown: false, */
-      },
-    },
-    TrainersGrid: {
-      screen: TrainersGrid,
-      navigationOptions: {
-        /* headerTitle: "Personal Trainers", */
-      },
-    },
-    TrainersInfo: {
-      screen: TrainersInfoScreen,
-    },
-    CategoriesList: {
-      screen: CategoriesScreen,
-      navigationOptions: {
-        headerTitle: "All Categories",
-      },
-    },
-  },
-  {
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
-);
-//========================================================================================
-const profileNavigator = createStackNavigator(
-  {
-    Profile: {
-      screen: ProfileScreen,
-    },
-  },
-  {
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
-);
-//========================================================================================
-const scheduleNavigator = createStackNavigator(
-  {
-    Schedule: ScheduleScreen,
-  },
-  {
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
-);
-//========================================================================================
-const favTrainersNavigator = createStackNavigator(
-  {
-    favTrainers: {
-      screen: FavoriteTrainersScreen,
-      navigationOptions: {
-        headerTitle: "Favorite Trainers",
-      },
-    },
-  },
-  {
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
-);
-//========================================================================================
-const tabNavigator = createBottomTabNavigator(
-  {
-    Trainers: {
-      screen: TrainersNavigator,
-      navigationOptions: {
-        tabBarIcon: (tabInfo) => {
-          return (
-            <Ionicons name="ios-fitness" size={29} color={tabInfo.tintColor} />
-          );
-        },
-      },
-    },
-    Profile: {
-      screen: profileNavigator,
-      navigationOptions: {
-        tabBarIcon: (tabInfo) => {
-          return (
-            <Ionicons name="ios-contact" size={29} color={tabInfo.tintColor} />
-          );
-        },
-      },
-    },
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: "#cf2144",
-      inactiveTintColor: "white",
-      activeBackgroundColor: "#5288de",
-      inactiveBackgroundColor: "#5288de",
-    },
-  }
-);
+import MainScreen from "../screens/MainScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegistrationScreen from "../screens/RegistrationScreen";
+import SoundsScreen from "../screens/SoundsScreen";
+import WordsScreen from "../screens/WordsScreen";
+import StoryScreen from "../screens/StoryScreen";
+import SentencesScreen from "../screens/SentencesScreen";
+import PriceScreen from "../screens/PriceScreen";
+
 //========================================================================================
 const LoginRegisterNav = createStackNavigator(
   {
@@ -135,39 +24,33 @@ const LoginRegisterNav = createStackNavigator(
   }
 );
 //========================================================================================
-const drawerNavigator = createDrawerNavigator(
+const choiseNav = createStackNavigator(
   {
-    TabNav: {
-      screen: tabNavigator,
-      navigationOptions: {
-        drawerLabel: "Home",
-      },
-    },
-    Schedule: {
-      screen: scheduleNavigator,
-      navigationOptions: {
-        drawerLabel: "My Schedule",
-      },
-    },
-    favTrainers: {
-      screen: favTrainersNavigator,
-      navigationOptions: {
-        drawerLabel: "My Trainers",
-      },
-    },
+    main: MainScreen,
+    sounds: SoundsScreen,
+    words: WordsScreen,
+    sentence: SentencesScreen,
+    story: StoryScreen,
+    price: PriceScreen,
   },
   {
-    contentOptions: {
-      activeTintColor: "red",
-      labelStyle: {
-        fontFamily: "averia-libre",
-      },
+    defaultNavigationOptions: {
+      headerShown: false,
     },
   }
 );
 //========================================================================================
-const Navigator = createSwitchNavigator({
-  loginregister: LoginRegisterNav,
-  drawer: drawerNavigator,
-});
-export default createAppContainer(Navigator);
+const mainScreenNav = createSwitchNavigator(
+  {
+    //loginregister: LoginRegisterNav,
+    choise: choiseNav,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+//========================================================================================
+
+export default createAppContainer(mainScreenNav);

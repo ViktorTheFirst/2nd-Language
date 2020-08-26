@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Image,
 } from "react-native";
+import bgImage from "../assets/images/main2.jpg";
 import { useDispatch } from "react-redux";
-import bgImage from "../assets/images/fit_bg_6.jpg";
-import { login } from "..//store/actions/authActions";
-import { getprofile } from "../store/actions/profileActions";
+import { login } from "../store/actions/authActions";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -23,17 +23,17 @@ const LoginScreen = (props) => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  useEffect(() => {
+  /*  useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
-  }, [error]);
+  }, [error]); */
 
   const loginHandler = async () => {
     try {
       await dispatch(login({ email, password })); //activates login in authActions
-      await dispatch(getprofile());
-      props.navigation.navigate("drawer");
+      //await dispatch(getprofile());
+      props.navigation.navigate("choise");
     } catch (err) {
       setError(err.message);
     }
@@ -73,7 +73,7 @@ const LoginScreen = (props) => {
         onPress={() => props.navigation.navigate("Registration")}
       >
         <Text style={{ ...styles.btnText, color: "red" }}>
-          CREATE NEW ACCOUNT
+          Create new acount
         </Text>
       </TouchableOpacity>
     </ImageBackground>
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+
     width: null,
     height: null,
   },
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     fontSize: 16,
     paddingLeft: 45,
-    backgroundColor: "rgba(0,0,0,0.35)",
+    backgroundColor: "rgba(174,92,218,0.7)",
     color: "rgba(255,255,255,0.7)",
     marginHorizontal: 25,
   },
@@ -110,9 +111,12 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   btnRegister: {
-    position: "absolute",
-    bottom: 10,
-    textAlign: "center",
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: "#5288de",
+    justifyContent: "center",
+    marginTop: 10,
   },
   btnText: {
     fontSize: 16,
@@ -120,5 +124,4 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
 export default LoginScreen;

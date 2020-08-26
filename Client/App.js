@@ -3,20 +3,17 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 import { enableScreens } from "react-native-screens";
 import * as Font from "expo-font";
 import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
-import Navigator from "./navigation/Navigator";
+import LoginScreen from "./screens/LoginScreen";
+import Navigator from "./navigation/navigator";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import trainersReducer from "./store/reducers/trainersReducer";
-import authReducers from "./store/reducers/authReducers";
+import authReducer from "./store/reducers/authReducers";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
 enableScreens(); //preformance optinization
-
 const rootReducer = combineReducers({
-  trainersRed: trainersReducer,
-  authRed: authReducers,
+  authRed: authReducer,
 });
-
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {

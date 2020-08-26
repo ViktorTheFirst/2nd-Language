@@ -11,11 +11,13 @@ router.get("/", (req, res) => {
 });
 //===========================================================================================
 router.post("/register", async (req, res) => {
+  //console.log("INSIDE auth register");
+  //console.log("req.body: ", req.body);
   //validate user before creation
   const { error } = registerValidation(req.body);
-  //console.log(req.body);
 
   if (error) return res.status(400).send(error.details[0].message);
+
   try {
     //check if user email already in DB
     const emailExist = await User.findOne({ email: req.body.email });
@@ -29,7 +31,9 @@ router.post("/register", async (req, res) => {
     const user = new User({
       email: req.body.email,
       password: hashedPassword,
-      name: req.body.name,
+      lastName: req.body.lname,
+      firstName: req.body.fname,
+      age: req.body.age,
     });
     await user.save();
 
@@ -42,7 +46,7 @@ router.post("/register", async (req, res) => {
       { expiresIn: 36000 },
       (err, token) => {
         if (err) throw err;
-        //console.log(token);
+        //console.log("token: ", token);
         res.json({ token });
       }
     );
@@ -53,8 +57,11 @@ router.post("/register", async (req, res) => {
 
 //===========================================================================================
 router.post("/login", async (req, res) => {
+  //console.log("INSIDE auth login");
+  //console.log("req.body: ", req.body);
+
   const { error } = loginValidation(req.body);
-  //console.log(process.env.TOKEN_SECRET);
+
   if (error) return res.status(400).json({ errors: error.details[0].message });
 
   try {
@@ -73,7 +80,7 @@ router.post("/login", async (req, res) => {
         .json({ errors: [{ msg: "Invalid Login details" }] });
 
     const payload = { user: { id: user.id } };
-    //console.log(payload);
+
     //create and send token as a result
     jwt.sign(
       payload,

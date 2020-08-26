@@ -1,43 +1,13 @@
 import { REGISTER, LOGIN } from "./const";
-//const youripadress = "http://192.168.0.86:5000";
-const youripadress = "https://fitness2020.herokuapp.com";
 
-//===========================================================================================
-export const login = (data) => async (dispatch) => {
-  try {
-    const loginToken = await fetch(`${youripadress}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!loginToken.ok) {
-      const errorResData = await loginToken.json();
-      let message = "Login failed";
-      if (errorResData && errorResData.errors.length > 0)
-        message = errorResData.errors[0].msg;
-      throw new Error(message);
-    }
-
-    let jsonToken = await loginToken.json();
-
-    dispatch({
-      type: LOGIN,
-      payload: { token: jsonToken.token },
-    });
-    return jsonToken;
-  } catch (err) {
-    throw err;
-  }
-};
+const yourIPadress = "http://192.168.0.86:5000";
 
 //===========================================================================================
 export const register = (data) => async (dispatch) => {
+  //console.log("INSIDE auth actions register");
+  //console.log("data: ", data);
   try {
-    const regToken = await fetch(`${youripadress}/api/auth/register`, {
+    const regToken = await fetch(`${yourIPadress}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,6 +31,40 @@ export const register = (data) => async (dispatch) => {
       payload: { token: json.token },
     });
     return json;
+  } catch (err) {
+    throw err;
+  }
+};
+//===========================================================================================
+
+export const login = (data) => async (dispatch) => {
+  //console.log("INSIDE auth actions login");
+  //console.log("data: ", data);
+  try {
+    const loginToken = await fetch(`${yourIPadress}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!loginToken.ok) {
+      const errorResData = await loginToken.json();
+      let message = "Login failed";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let jsonToken = await loginToken.json();
+
+    dispatch({
+      type: LOGIN,
+      payload: { token: jsonToken.token },
+    });
+    return jsonToken;
   } catch (err) {
     throw err;
   }
