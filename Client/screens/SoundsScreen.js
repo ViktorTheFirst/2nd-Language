@@ -6,11 +6,16 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
+const dim = Dimensions.get("screen");
 import imageBG from "../assets/images/sounds_resized.png";
+import SuccessFail from "../components/SuccessFail";
+import AnswerContainer from "../components/AnswerContainer";
 
 import { Audio } from "expo-av";
 import { images } from "../constants/imageExport";
+import { sounds } from "../constants/soundExport";
 
 export default class SoundScreen extends Component {
   constructor(props) {
@@ -39,6 +44,16 @@ export default class SoundScreen extends Component {
     this.answerSound_2 = new Audio.Sound();
     this.answerSound_3 = new Audio.Sound();
     try {
+      Audio.setIsEnabledAsync(true);
+      Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+        shouldDuckAndroid: true,
+        staysActiveInBackground: true,
+      });
+
       this.questionSound.loadAsync(
         require("..//assets/sounds/ba.wav"),
         {
@@ -85,16 +100,6 @@ export default class SoundScreen extends Component {
     } catch (err) {
       console.log("error loading sounds", err);
     }
-
-    Audio.setIsEnabledAsync(true);
-    Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
-      shouldDuckAndroid: true,
-      staysActiveInBackground: true,
-    });
   }
 
   async componentWillUnmount() {
@@ -107,15 +112,15 @@ export default class SoundScreen extends Component {
   playQuestion = async () => {
     try {
       await this.questionSound.playAsync();
-      setTimeout(() => {
+      /* setTimeout(() => {
         //make the sound when the text is showing
         this.setState({ showQuestion: !this.state.showQuestion });
-      }, 700);
-
+      }, 700); */
+      this.setState({ showQuestion: !this.state.showQuestion });
       setTimeout(() => {
         //hide the quesion after some time
         this.setState({ showQuestion: !this.state.showQuestion });
-      }, 1400);
+      }, 1000);
       await this.questionSound.setPositionAsync(0);
     } catch (err) {
       console.log("Cant play question", err);
@@ -221,75 +226,78 @@ export default class SoundScreen extends Component {
           <Text style={styles.headerText}>Sounds Lesson 1</Text>
         </View>
         <View style={styles.grid}>
-          <View style={styles.questionColumn}>
-            {/* --------------------------------------QUESTION TEXT------------------------------------------------ */}
-            <View style={styles.questionPopup}>
-              {this.state.showQuestion && (
-                <Text style={styles.questionText}>BA..</Text>
-              )}
+          <View style={styles.answerRow}>
+            {/* --------------------------------------ANSWER 1------------------------------------------------ */}
+            <View>
+              <View style={styles.textContainer}>
+                {this.state.showAnswer1 && (
+                  <Text style={styles.questionText}>PIANO</Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.answer1ImageContainer}
+                onPress={this.playAnswer1.bind(this, false)}
+              >
+                <Image source={this.state.answer1} style={styles.image} />
+              </TouchableOpacity>
             </View>
-            {/* --------------------------------------QUESTION IMAGE------------------------------------------------ */}
-            <TouchableOpacity
-              onPress={this.playQuestion.bind(this)}
-              style={styles.questionImageContainer}
-            >
-              <Image
-                source={require("../assets/images/p1.png")}
-                style={styles.questionImage}
-              />
-            </TouchableOpacity>
-            {/* --------------------------------------SUCCESS/FAIL ICON------------------------------------------------ */}
-            <View style={styles.exit}>
-              {this.state.showExitIcon && (
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("price")}
-                >
-                  <Image
-                    source={this.state.exitIcon}
-                    style={styles.exitIconImage}
-                  />
-                </TouchableOpacity>
-              )}
+            {/* --------------------------------------ANSWER 2------------------------------------------------ */}
+            <View>
+              <View style={styles.answer2TextContainer}>
+                {this.state.showAnswer2 && (
+                  <Text style={styles.questionText}>BANANA</Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.answer2ImageContainer}
+                onPress={this.playAnswer2.bind(this, true)}
+              >
+                <Image source={this.state.answer2} style={styles.image} />
+              </TouchableOpacity>
+            </View>
+            {/* --------------------------------------ANSWER 3------------------------------------------------ */}
+            <View>
+              <View style={styles.answer3TextContainer}>
+                {this.state.showAnswer3 && (
+                  <Text style={styles.questionText}>LION</Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.answer3ImageContainer}
+                onPress={this.playAnswer3.bind(this, false)}
+              >
+                <Image source={this.state.answer3} style={styles.image} />
+              </TouchableOpacity>
             </View>
           </View>
+          {/* --------------------------------------QUESTION------------------------------------------------ */}
+          <View style={styles.questionRow}>
+            <View style={styles.freeSpace} />
+            <View style={styles.questionImageAndpopup}>
+              <View style={styles.questionPopup}>
+                {this.state.showQuestion && (
+                  <Text style={styles.questionText}>BA..</Text>
+                )}
+              </View>
 
-          <View style={styles.answerColumn}>
-            {/* --------------------------------------ANSWER 1------------------------------------------------ */}
-            <View style={styles.answer1TextContainer}>
-              {this.state.showAnswer1 && (
-                <Text style={styles.questionText}>PIANO</Text>
-              )}
+              <TouchableOpacity
+                onPress={this.playQuestion.bind(this)}
+                style={styles.questionImageContainer}
+              >
+                <Image
+                  source={require("../assets/images/p1.png")}
+                  style={styles.questionImage}
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.answer1ImageContainer}
-              onPress={this.playAnswer1.bind(this, false)}
-            >
-              <Image source={this.state.answer1} style={styles.image} />
-            </TouchableOpacity>
-            {/* --------------------------------------ANSWER 2------------------------------------------------ */}
-            <View style={styles.answer2TextContainer}>
-              {this.state.showAnswer2 && (
-                <Text style={styles.questionText}>BANANA</Text>
-              )}
+            {/* --------------------------------------SUCCESS/FAIL ICON------------------------------------------------ */}
+            <View style={styles.exit}>
+              <SuccessFail
+                navigation={this.props.navigation} //pass the navigation prop to the component
+                show={this.state.showExitIcon}
+                iconType={this.state.exitIcon}
+              />
             </View>
-            <TouchableOpacity
-              style={styles.answer2ImageContainer}
-              onPress={this.playAnswer2.bind(this, true)}
-            >
-              <Image source={this.state.answer2} style={styles.image} />
-            </TouchableOpacity>
-            {/* --------------------------------------ANSWER 3------------------------------------------------ */}
-            <View style={styles.answer3TextContainer}>
-              {this.state.showAnswer3 && (
-                <Text style={styles.questionText}>LION</Text>
-              )}
-            </View>
-            <TouchableOpacity
-              style={styles.answer3ImageContainer}
-              onPress={this.playAnswer3.bind(this, false)}
-            >
-              <Image source={this.state.answer3} style={styles.image} />
-            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -300,13 +308,17 @@ export default class SoundScreen extends Component {
 const styles = StyleSheet.create({
   grid: {
     flex: 8,
-    flexDirection: "row",
-  },
-  questionColumn: {
-    flex: 1,
     flexDirection: "column",
+  },
+  questionRow: {
+    flex: 8,
+    flexDirection: "row",
     justifyContent: "center",
+    //alignItems: "center",
     //backgroundColor: "green",
+  },
+  freeSpace: {
+    flex: 1,
   },
   questionText: {
     fontSize: 20,
@@ -314,11 +326,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "purple",
   },
-  answerColumn: {
-    flex: 1,
-    flexDirection: "column",
-
+  answerRow: {
+    flex: 7,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     //backgroundColor: "yellow",
   },
   image: {
@@ -326,36 +338,37 @@ const styles = StyleSheet.create({
     height: 140,
   },
   questionImage: {
-    width: 200,
-    height: 99,
+    width: 160,
+    height: 80,
   },
   questionImageContainer: {
-    flex: 1,
+    flex: 3,
     justifyContent: "center",
+    alignItems: "center",
     //backgroundColor: "orange",
   },
   questionPopup: {
-    flex: 2,
+    flex: 1,
     //backgroundColor: "blue",
+    alignItems: "center",
     justifyContent: "flex-end",
   },
   exit: {
-    flex: 2,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     //backgroundColor: "brown",
   },
+  questionImageAndpopup: {
+    flex: 2,
+    //alignItems: "flex-start",
+    //justifyContent: "center",
+  },
   backgroundContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    //justifyContent: "center",
+    //alignItems: "center",
     flexDirection: "column",
-    width: null,
-    height: null,
-  },
-  exitIconImage: {
-    width: 140,
-    height: 140,
   },
   header: {
     flex: 1,
@@ -370,7 +383,7 @@ const styles = StyleSheet.create({
   },
   answer1ImageContainer: {
     flex: 3,
-    //backgroundColor: "brown",
+    //backgroundColor: "pink",
   },
   answer2ImageContainer: {
     flex: 3,
@@ -381,11 +394,6 @@ const styles = StyleSheet.create({
     //backgroundColor: "green",
   },
   /* ----------------------------------------------------------------------------- */
-  answer1TextContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    //backgroundColor: "purple",
-  },
   answer2TextContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -395,5 +403,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     //backgroundColor: "indigo",
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    //backgroundColor: "purple",
   },
 });

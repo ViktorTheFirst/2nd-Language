@@ -4,7 +4,7 @@
     "slug": "test1",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/images/lang_splash.png",

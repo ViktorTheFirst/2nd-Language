@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
   ImageBackground,
   Dimensions,
   TouchableOpacity,
@@ -14,13 +13,15 @@ import {
 import bgImage from "../assets/images/main2.jpg";
 import { useDispatch } from "react-redux";
 import { login } from "../store/actions/authActions";
+import { LinearGradient } from "expo-linear-gradient";
 
+const BG = require("../assets/images/main2.jpg");
 const { width: WIDTH } = Dimensions.get("window");
 
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
   /*  useEffect(() => {
@@ -29,53 +30,87 @@ const LoginScreen = (props) => {
     }
   }, [error]); */
 
+  /* const changeColor = () => {
+    return {};
+  }; */
+
   const loginHandler = async () => {
+    //console.log("LOGIN");
     try {
       await dispatch(login({ email, password })); //activates login in authActions
       //await dispatch(getprofile());
       props.navigation.navigate("choise");
     } catch (err) {
-      setError(err.message);
+      //setError(err.message);
+      console.log(err);
     }
   };
 
   return (
-    <ImageBackground style={styles.backgroundContainer} source={bgImage}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder={"Email"}
-          keyboardType="email-address"
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder={"Password"}
-          secureTextEntry={true}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-      </View>
+    <ImageBackground style={styles.backgroundContainer} source={BG}>
+      <View style={styles.grid}>
+        <View style={styles.logoContainer}>
+          {/* <Image
+            source={require("../assets/images/logo3.png")}
+            style={{ height: 100, width: 100 }}
+          /> */}
+        </View>
 
-      <TouchableOpacity style={styles.btnLogin} onPress={loginHandler}>
-        <Text style={styles.btnText}>Login</Text>
-      </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder={"Email"}
+            keyboardType="email-address"
+            placeholderTextColor={"rgba(10, 146, 168, 0.9)"}
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            //onFocus={}
+          />
+          <TextInput
+            placeholder={"Password"}
+            secureTextEntry={true}
+            placeholderTextColor={"rgba(10, 146, 168, 0.9)"}
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+          />
+        </View>
 
-      <TouchableOpacity
-        style={styles.btnRegister}
-        onPress={() => props.navigation.navigate("Registration")}
-      >
-        <Text style={{ ...styles.btnText, color: "red" }}>
-          Create new acount
-        </Text>
-      </TouchableOpacity>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={loginHandler}>
+            <LinearGradient
+              colors={[
+                "rgba(184, 210, 51,1.0)",
+                "rgba(20, 192, 242,1.0)",
+                "rgba(10, 146, 168,1.0)",
+              ]}
+              start={[0.8, 0.9]}
+              end={[0.5, 0.7]}
+              style={styles.btnLogin}
+            >
+              <Text style={styles.btnText}>Login</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Registration")}
+          >
+            <LinearGradient
+              colors={[
+                "rgba(184, 210, 51,1.0)",
+                "rgba(20, 192, 242,1.0)",
+                "rgba(10, 146, 168,1.0)",
+              ]}
+              start={[0.8, 0.9]}
+              end={[0.4, 0.2]}
+              style={styles.btnRegister}
+            >
+              <Text style={{ ...styles.btnText }}>Create new acount</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ImageBackground>
   );
 };
@@ -89,32 +124,51 @@ const styles = StyleSheet.create({
     width: null,
     height: null,
   },
+  grid: {
+    flex: 1,
+    flexDirection: "column",
+    //backgroundColor: "pink",
+  },
+  logoContainer: {
+    flex: 3,
+    //backgroundColor: "gray",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   input: {
-    width: WIDTH - 55,
+    width: WIDTH - 65,
     height: 45,
     borderRadius: 25,
     fontSize: 16,
-    paddingLeft: 45,
-    backgroundColor: "rgba(174,92,218,0.7)",
-    color: "rgba(255,255,255,0.7)",
+    paddingLeft: 45, // padding of the placeHolder text
+    backgroundColor: "rgba(255,1,38,0.5)",
     marginHorizontal: 25,
+    marginVertical: 5,
   },
   inputContainer: {
-    marginTop: 10,
+    flex: 3,
+
+    //backgroundColor: "blue",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  btnContainer: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnLogin: {
-    width: WIDTH - 55,
+    width: WIDTH - 65,
     height: 45,
     borderRadius: 25,
-    backgroundColor: "#5288de",
+    backgroundColor: "rgb(184,210,51)",
     justifyContent: "center",
-    marginTop: 30,
   },
   btnRegister: {
-    width: WIDTH - 55,
+    width: WIDTH - 65,
     height: 45,
     borderRadius: 25,
-    backgroundColor: "#5288de",
+    backgroundColor: "rgb(20,192,242)",
     justifyContent: "center",
     marginTop: 10,
   },

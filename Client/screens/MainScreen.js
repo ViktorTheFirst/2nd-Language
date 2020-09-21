@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   Button,
   StyleSheet,
   ImageBackground,
-  TextInput,
-  Dimensions,
-  TouchableOpacity,
   TouchableHighlight,
   Image,
 } from "react-native";
-import bgImage from "../assets/images/main_resized3.png";
+const BG = require("../assets/images/main_resized3.png");
 import { images } from "..//constants/imageExport";
 
 const MainScreen = (props) => {
   return (
-    <ImageBackground style={styles.backgroundContainer} source={bgImage}>
+    <ImageBackground style={styles.backgroundContainer} source={BG}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Choose a lesson</Text>
       </View>
-      <View style={styles.columnsContainer}>
+      <View style={styles.rowContainer}>
         <View style={styles.planetContainer}>
+          <Text style={{ ...styles.headerText, fontSize: 18 }}>STORY</Text>
           <TouchableHighlight
             onPress={() => props.navigation.navigate("story")}
           >
@@ -30,6 +28,9 @@ const MainScreen = (props) => {
               style={styles.story}
             />
           </TouchableHighlight>
+        </View>
+        <View style={styles.planetContainer}>
+          <Text style={{ ...styles.headerText, fontSize: 18 }}>SENTENCE</Text>
           <TouchableHighlight
             onPress={() => props.navigation.navigate("sentence")}
           >
@@ -38,6 +39,9 @@ const MainScreen = (props) => {
               style={styles.sentances}
             />
           </TouchableHighlight>
+        </View>
+        <View style={styles.planetContainer}>
+          <Text style={{ ...styles.headerText, fontSize: 18 }}>WORDS</Text>
           <TouchableHighlight
             onPress={() => props.navigation.navigate("words")}
           >
@@ -46,6 +50,9 @@ const MainScreen = (props) => {
               style={styles.words}
             />
           </TouchableHighlight>
+        </View>
+        <View style={styles.planetContainer}>
+          <Text style={{ ...styles.headerText, fontSize: 18 }}>SOUNDS</Text>
           <TouchableHighlight
             onPress={() => props.navigation.navigate("sounds")}
           >
@@ -55,28 +62,6 @@ const MainScreen = (props) => {
             />
           </TouchableHighlight>
         </View>
-        <View style={styles.titleContainer}>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>STORY</Text>
-          <Text
-            style={{
-              ...styles.headerText,
-              fontSize: 16,
-              color: "black",
-            }}
-          >
-            SENTANCE
-          </Text>
-          <Text style={{ ...styles.headerText, fontSize: 18, color: "black" }}>
-            WORDS
-          </Text>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>SOUNDS</Text>
-        </View>
-        <View style={styles.rocketPath}>
-          {/* <Text>stop4</Text> //sign where the rocket will stop 
-          <Text>stop3</Text>
-          <Text>stop2</Text>
-          <Text>stop1</Text> */}
-        </View>
       </View>
     </ImageBackground>
   );
@@ -84,15 +69,18 @@ const MainScreen = (props) => {
 
 const styles = StyleSheet.create({
   planetContainer: {
-    flex: 3,
+    flex: 1,
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 10,
     //backgroundColor: "pink",
   },
-  columnsContainer: {
+  rowContainer: {
     flex: 8,
     flexDirection: "row",
+    marginHorizontal: 30,
+    //backgroundColor: "powderblue",
   },
   headerContainer: {
     flex: 1,
@@ -105,13 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     //backgroundColor: "powderblue",
-  },
-  titleContainer: {
-    flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
-
-    //backgroundColor: "gray",
   },
   story: {
     width: 200,
@@ -139,7 +120,7 @@ const styles = StyleSheet.create({
     //backgroundColor: "yellow",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     color: "white",

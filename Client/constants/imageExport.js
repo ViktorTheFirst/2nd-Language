@@ -28,15 +28,15 @@ const images = {
   wordScreenImages: {
     answer1: {
       path1: require("../assets/images/p2.png"), //image before the click
-      path2: require("../assets/images/rocket.png"), //image after the click
+      path2: require("../assets/lesson_images/monkey.png"), //image after the click
     },
     answer2: {
       path1: require("../assets/images/p2.png"),
-      path2: require("../assets/images/rocket.png"),
+      path2: require("../assets/lesson_images/Spot.png"),
     },
     answer3: {
       path1: require("../assets/images/p2.png"),
-      path2: require("../assets/images/rocket.png"),
+      path2: require("../assets/lesson_images/crocdile.jpg"),
     },
   },
   sentanceScreenImages: {

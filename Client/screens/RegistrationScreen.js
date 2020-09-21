@@ -13,6 +13,7 @@ import {
 import { register } from "../store/actions/authActions";
 import { useDispatch } from "react-redux";
 import bgImage from "../assets/images/regBG.jpg";
+import MyButton from "../components/MyButton";
 const { width: WIDTH } = Dimensions.get("window");
 
 const RegistrationScreen = (props) => {
