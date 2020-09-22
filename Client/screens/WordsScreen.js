@@ -10,10 +10,11 @@ import {
   PanResponder,
   Animated,
 } from "react-native";
-import imageBG from "../assets/images/12.png";
+import imageBG from "../assets/images/18.png";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import { Audio } from "expo-av";
-import { images } from "../constants/imageExport";
+import { images2 } from "../constants/imageExport";
+import { sounds } from "../constants/soundExport";
 import SuccessFail from "..//components/SuccessFail";
 
 export default class WordsScreen extends Component {
@@ -21,22 +22,31 @@ export default class WordsScreen extends Component {
     super(props);
 
     this.state = {
+      lessonNum: props.navigation.getParam("lesson"),
+      qSoundName: props.navigation.getParam("qSound"), //monkey
+      a1SoundName: props.navigation.getParam("a1Sound"), //hippo
+      a2SoundName: props.navigation.getParam("a2Sound"),
+      a3SoundName: props.navigation.getParam("a3Sound"),
+      qSound: sounds[props.navigation.getParam("qSound")], //require("../assets/sounds/monkey.wav")
+      a1Sound: sounds[props.navigation.getParam("a1Sound")],
+      a2Sound: sounds[props.navigation.getParam("a2Sound")],
+      a3Sound: sounds[props.navigation.getParam("a3Sound")],
       showQuestion: false,
       showAnswer1: false,
       showAnswer2: false,
       showAnswer3: false,
-      answer1: images.wordScreenImages.answer1.path1,
-      answer2: images.wordScreenImages.answer2.path1,
-      answer3: images.wordScreenImages.answer3.path1,
+      answer: images2.jupiter,
+      answer1: images2[props.navigation.getParam("a1Sound")],
+      answer2: images2[props.navigation.getParam("a2Sound")],
+      answer3: images2[props.navigation.getParam("a3Sound")],
       showDraggable: true,
       dropZoneValues: null,
       pan1: new Animated.ValueXY(),
       pan2: new Animated.ValueXY(),
       pan3: new Animated.ValueXY(),
-      correct: false,
-      incorrect: false,
       showExitIcon: false,
-      exitIcon: images.soundScreenImages.exitIcon.fail,
+      isCorrect: 0,
+      exitIcon: images2.exitIcon.fail,
     };
     //----------------------------------PAN 1-----------------------------------------------
     this.panResponder1 = PanResponder.create({
@@ -51,10 +61,27 @@ export default class WordsScreen extends Component {
       onPanResponderRelease: (e, gesture) => {
         //function activated when user releases the object
         if (this.isDropZone(gesture)) {
-          this.setState({
-            exitIcon: images.soundScreenImages.exitIcon.success,
-            showExitIcon: true,
-          });
+          if (this.state.isCorrect == 1) {
+            this.setState({
+              exitIcon: images2.exitIcon.success,
+              showExitIcon: true,
+            });
+          } else {
+            this.setState({
+              exitIcon: images2.exitIcon.fail,
+              showExitIcon: true,
+            });
+          }
+          setTimeout(() => {
+            //hide red X after couple seconds
+            this.setState({ showExitIcon: false });
+          }, 3000);
+          setTimeout(() => {
+            //return the image back
+            Animated.spring(this.state.pan1, {
+              toValue: { x: 0, y: 0 },
+            }).start();
+          }, 3000);
         } else {
           Animated.spring(this.state.pan1, { toValue: { x: 0, y: 0 } }).start();
         }
@@ -73,10 +100,17 @@ export default class WordsScreen extends Component {
       onPanResponderRelease: (e, gesture) => {
         //function activated when user releases the object
         if (this.isDropZone(gesture)) {
-          this.setState({
-            exitIcon: images.soundScreenImages.exitIcon.fail,
-            showExitIcon: true,
-          });
+          if (this.state.isCorrect == 2) {
+            this.setState({
+              exitIcon: images2.exitIcon.success,
+              showExitIcon: true,
+            });
+          } else {
+            this.setState({
+              exitIcon: images2.exitIcon.fail,
+              showExitIcon: true,
+            });
+          }
           setTimeout(() => {
             //hide red X after couple seconds
             this.setState({ showExitIcon: false });
@@ -105,10 +139,17 @@ export default class WordsScreen extends Component {
       onPanResponderRelease: (e, gesture) => {
         //function activated when user releases the object
         if (this.isDropZone(gesture)) {
-          this.setState({
-            exitIcon: images.soundScreenImages.exitIcon.fail,
-            showExitIcon: true,
-          });
+          if (this.state.isCorrect == 3) {
+            this.setState({
+              exitIcon: images2.exitIcon.success,
+              showExitIcon: true,
+            });
+          } else {
+            this.setState({
+              exitIcon: images2.exitIcon.fail,
+              showExitIcon: true,
+            });
+          }
           setTimeout(() => {
             //hide red X after couple seconds
             this.setState({ showExitIcon: false });
@@ -150,7 +191,7 @@ export default class WordsScreen extends Component {
 
     try {
       this.questionSound.loadAsync(
-        require("..//assets/sounds/monkeyMP3.mp3"),
+        this.state.qSound,
         {
           shouldPlay: false,
           volume: 1.0,
@@ -171,10 +212,22 @@ export default class WordsScreen extends Component {
       shouldDuckAndroid: true,
       staysActiveInBackground: true,
     });
+
+    //check if qustion string "ba" included in answer strings like "banana"
+    if (this.state.a1SoundName == this.state.qSoundName) {
+      this.setState({ isCorrect: 1 });
+    } else if (this.state.a2SoundName == this.state.qSoundName) {
+      this.setState({ isCorrect: 2 });
+    } else {
+      this.setState({ isCorrect: 3 });
+    }
   }
 
   async componentWillUnmount() {
     this.questionSound.unloadAsync();
+    this.setState = (state, callback) => {
+      return;
+    };
   }
 
   playQuestion = async () => {
@@ -192,7 +245,6 @@ export default class WordsScreen extends Component {
 
   playAnswer1 = async () => {
     try {
-      this.setState({ answer1: images.wordScreenImages.answer1.path2 });
       this.setState({ showAnswer1: true });
     } catch (err) {
       console.log("Cant play audio", err);
@@ -200,7 +252,6 @@ export default class WordsScreen extends Component {
   };
   playAnswer2 = async () => {
     try {
-      this.setState({ answer2: images.wordScreenImages.answer2.path2 });
       this.setState({ showAnswer2: true });
     } catch (err) {
       console.log("Cant play audio", err);
@@ -208,7 +259,6 @@ export default class WordsScreen extends Component {
   };
   playAnswer3 = async () => {
     try {
-      this.setState({ answer3: images.wordScreenImages.answer3.path2 });
       this.setState({ showAnswer3: true });
     } catch (err) {
       console.log("Cant play audio", err);
@@ -220,12 +270,14 @@ export default class WordsScreen extends Component {
       <ImageBackground source={imageBG} style={styles.backgroundContainer}>
         {/* --------------------------------------HEADER------------------------------------------------ */}
         <View style={styles.header}>
-          <Text style={styles.headerText}>Words Lesson 1</Text>
+          <Text style={styles.headerText}>
+            Words Lesson {this.state.lessonNum}
+          </Text>
         </View>
         <View style={styles.grid}>
           <View style={styles.answerRow}>
             {/* --------------------------------------ANSWER 1------------------------------------------------ */}
-            <View /* style={styles.answerImageContainer} */>
+            <View>
               {this.state.showAnswer1 && (
                 <Animated.Image
                   {...this.panResponder1.panHandlers}
@@ -236,7 +288,7 @@ export default class WordsScreen extends Component {
 
               {!this.state.showAnswer1 && (
                 <TouchableOpacity onPress={this.playAnswer1.bind(this)}>
-                  <Image source={this.state.answer1} style={styles.image} />
+                  <Image source={this.state.answer} style={styles.image} />
                 </TouchableOpacity>
               )}
             </View>
@@ -253,7 +305,7 @@ export default class WordsScreen extends Component {
 
               {!this.state.showAnswer2 && (
                 <TouchableOpacity onPress={this.playAnswer2.bind(this)}>
-                  <Image source={this.state.answer2} style={styles.image} />
+                  <Image source={this.state.answer} style={styles.image} />
                 </TouchableOpacity>
               )}
             </View>
@@ -270,7 +322,7 @@ export default class WordsScreen extends Component {
 
               {!this.state.showAnswer3 && (
                 <TouchableOpacity onPress={this.playAnswer3.bind(this)}>
-                  <Image source={this.state.answer3} style={styles.image} />
+                  <Image source={this.state.answer} style={styles.image} />
                 </TouchableOpacity>
               )}
             </View>
@@ -282,7 +334,9 @@ export default class WordsScreen extends Component {
             <View style={styles.questionImageAndpopup}>
               <View style={styles.questionPopup}>
                 {this.state.showQuestion && (
-                  <Text style={styles.questionText}>MONKEY</Text>
+                  <Text style={styles.questionText}>
+                    {this.state.qSoundName}
+                  </Text>
                 )}
               </View>
               {/* --------------------------------------QUESTION IMAGE------------------------------------------------ */}

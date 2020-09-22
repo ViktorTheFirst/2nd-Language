@@ -2,128 +2,142 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
+  FlatList,
   StyleSheet,
   ImageBackground,
   TouchableHighlight,
   Image,
 } from "react-native";
-const BG = require("../assets/images/main_resized3.png");
-import { images } from "..//constants/imageExport";
+import Card from "../components/Card";
+const BG = require("../assets/images/main_1.png");
+
+const DATA = [
+  {
+    id: "1",
+    title: "Sounds",
+    lessonNum: "1",
+    screen: "sounds",
+    questionSound: "ba",
+    answer_1_sound: "piano",
+    answer_2_sound: "banana",
+    answer_3_sound: "lion",
+  },
+  {
+    id: "2",
+    title: "Sounds",
+    lessonNum: "2",
+    screen: "sounds",
+    questionSound: "di",
+    answer_1_sound: "yellow",
+    answer_2_sound: "stairs",
+    answer_3_sound: "dinner",
+  },
+  {
+    id: "3",
+    title: "Sounds",
+    lessonNum: "3",
+    screen: "sounds",
+    questionSound: "ba",
+    answer_1_sound: "piano",
+    answer_2_sound: "banana",
+    answer_3_sound: "lion",
+  },
+  {
+    id: "4",
+    title: "Sounds",
+    lessonNum: "4",
+    screen: "sounds",
+    questionSound: "ba",
+    answer_1_sound: "piano",
+    answer_2_sound: "banana",
+    answer_3_sound: "lion",
+  },
+  {
+    id: "5",
+    title: "Words",
+    lessonNum: "1",
+    screen: "words",
+    questionSound: "monkey",
+    answer_1_sound: "hippo",
+    answer_2_sound: "turtle",
+    answer_3_sound: "monkey",
+  },
+  {
+    id: "6",
+    title: "Words",
+    lessonNum: "2",
+    screen: "words",
+    questionSound: "crocodile",
+    answer_1_sound: "piano",
+    answer_2_sound: "basket",
+    answer_3_sound: "crocodile",
+  },
+  {
+    id: "7",
+    title: "Sentence",
+    lessonNum: "1",
+    screen: "sentence",
+    questionSound: "crocodile",
+    answer_1_sound: "piano",
+    answer_2_sound: "basket",
+    answer_3_sound: "crocodile",
+  },
+];
 
 const MainScreen = (props) => {
+  const renderListItem = ({ item }) => (
+    <Card
+      title={item.title}
+      lesson={item.lessonNum}
+      goTo={item.screen}
+      navigation={props.navigation}
+      qSound={item.questionSound}
+      a1Sound={item.answer_1_sound}
+      a2Sound={item.answer_2_sound}
+      a3Sound={item.answer_3_sound}
+    />
+  );
+
   return (
     <ImageBackground style={styles.backgroundContainer} source={BG}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Choose a lesson</Text>
+      <View style={styles.upperTabContainer}>
+        <Text>Upper Tab will be here</Text>
       </View>
-      <View style={styles.rowContainer}>
-        <View style={styles.planetContainer}>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>STORY</Text>
-          <TouchableHighlight
-            onPress={() => props.navigation.navigate("story")}
-          >
-            <Image
-              source={require("../assets/images/p1.png")}
-              style={styles.story}
-            />
-          </TouchableHighlight>
-        </View>
-        <View style={styles.planetContainer}>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>SENTENCE</Text>
-          <TouchableHighlight
-            onPress={() => props.navigation.navigate("sentence")}
-          >
-            <Image
-              source={require("../assets/images/p2.png")}
-              style={styles.sentances}
-            />
-          </TouchableHighlight>
-        </View>
-        <View style={styles.planetContainer}>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>WORDS</Text>
-          <TouchableHighlight
-            onPress={() => props.navigation.navigate("words")}
-          >
-            <Image
-              source={images.mainScreenImages.words.path}
-              style={styles.words}
-            />
-          </TouchableHighlight>
-        </View>
-        <View style={styles.planetContainer}>
-          <Text style={{ ...styles.headerText, fontSize: 18 }}>SOUNDS</Text>
-          <TouchableHighlight
-            onPress={() => props.navigation.navigate("sounds")}
-          >
-            <Image
-              source={images.mainScreenImages.sounds.path}
-              style={styles.sounds}
-            />
-          </TouchableHighlight>
-        </View>
+
+      <View style={styles.flatListContainer}>
+        <FlatList
+          horizontal={true}
+          data={DATA}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+
+      <View style={styles.bottomSpace}>
+        <Text>Bottom space will be here</Text>
       </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  planetContainer: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    //backgroundColor: "pink",
-  },
-  rowContainer: {
-    flex: 8,
-    flexDirection: "row",
-    marginHorizontal: 30,
-    //backgroundColor: "powderblue",
-  },
-  headerContainer: {
-    flex: 1,
-    //backgroundColor: "green",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  rocketPath: {
-    flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
-    //backgroundColor: "powderblue",
-  },
-  story: {
-    width: 200,
-    height: 99,
-  },
-  sentances: {
-    width: 200,
-    height: 143,
-  },
-  words: {
-    width: 200,
-    height: 99,
-  },
-  sounds: {
-    width: 120,
-    height: 120,
-  },
   backgroundContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: null,
-    height: null,
-    //opacity: 0.75,
+  },
+  flatListContainer: {
+    flex: 3,
+    padding: 20,
+    //backgroundColor: "orange",
+  },
+  upperTabContainer: {
+    flex: 1,
     //backgroundColor: "yellow",
   },
-  headerText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+  bottomSpace: {
+    flex: 1,
+    //backgroundColor: "green",
   },
 });
 
