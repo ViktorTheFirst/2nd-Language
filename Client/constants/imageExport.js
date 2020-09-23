@@ -72,6 +72,13 @@ const images2 = {
   yellow: require("../assets/lesson_images/yellow.png"),
   hippo: require("../assets/lesson_images/hippo.jpg"),
   turtle: require("../assets/lesson_images/turtle.jpg"),
+  //=========================SENTENCES==================
+  a_green_crocodile: require("../assets/lesson_images/a_green_crocodile.png"),
+  a_monkey_eating_a_banana: require("../assets/lesson_images/a_monkey_eating_a_banana.jpg"),
+  a_boy_eating_dinner: require("../assets/lesson_images/a_boy_eating_dinner.png"),
+  //===========================STORY====================
+  one_two_three: require("../assets/lesson_images/one_two_three.jpg"),
+
   //=========================EXIT=======================
   exitIcon: {
     success: require("../assets/images/green_v2.jpg"),

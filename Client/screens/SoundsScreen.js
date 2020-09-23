@@ -362,8 +362,8 @@ const styles = StyleSheet.create({
     //backgroundColor: "yellow",
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 120,
+    height: 120,
   },
   questionImage: {
     width: 160,

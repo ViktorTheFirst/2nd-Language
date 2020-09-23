@@ -44,16 +44,6 @@ const DATA = [
   },
   {
     id: "4",
-    title: "Sounds",
-    lessonNum: "4",
-    screen: "sounds",
-    questionSound: "ba",
-    answer_1_sound: "piano",
-    answer_2_sound: "banana",
-    answer_3_sound: "lion",
-  },
-  {
-    id: "5",
     title: "Words",
     lessonNum: "1",
     screen: "words",
@@ -63,7 +53,7 @@ const DATA = [
     answer_3_sound: "monkey",
   },
   {
-    id: "6",
+    id: "5",
     title: "Words",
     lessonNum: "2",
     screen: "words",
@@ -73,14 +63,21 @@ const DATA = [
     answer_3_sound: "crocodile",
   },
   {
-    id: "7",
+    id: "6",
     title: "Sentence",
     lessonNum: "1",
     screen: "sentence",
-    questionSound: "crocodile",
-    answer_1_sound: "piano",
-    answer_2_sound: "basket",
-    answer_3_sound: "crocodile",
+    questionSound: "a_monkey_eating_a_banana",
+    answer_1_sound: "a_boy_eating_dinner",
+    answer_2_sound: "a_green_crocodile",
+    answer_3_sound: "a_monkey_eating_a_banana",
+  },
+  {
+    id: "7",
+    title: "Story",
+    lessonNum: "1",
+    screen: "story",
+    questionSound: "one_two_three",
   },
 ];
 

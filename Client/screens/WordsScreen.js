@@ -213,7 +213,7 @@ export default class WordsScreen extends Component {
       staysActiveInBackground: true,
     });
 
-    //check if qustion string "ba" included in answer strings like "banana"
+    //check if question string "monkey" is exaclly liek answer strings like "banana"
     if (this.state.a1SoundName == this.state.qSoundName) {
       this.setState({ isCorrect: 1 });
     } else if (this.state.a2SoundName == this.state.qSoundName) {

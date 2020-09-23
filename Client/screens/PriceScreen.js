@@ -37,7 +37,6 @@ export default class PriceScreen extends Component {
                 this.props.navigation.navigate("main");
               }}
             />
-            <MyButton title={"NEXT LESSON"} />
           </View>
         </View>
       </ImageBackground>
