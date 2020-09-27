@@ -79,6 +79,20 @@ const images2 = {
   //===========================STORY====================
   one_two_three: require("../assets/lesson_images/one_two_three.jpg"),
 
+  //===========================AVATARS===========================
+  monster_1: require("../assets/images/monster_1.png"),
+  monster_2: require("../assets/images/monster_2.png"),
+  monster_3: require("../assets/images/monster_3.png"),
+  monster_4: require("../assets/images/monster_4.png"),
+  monster_5: require("../assets/images/monster_5.png"),
+  monster_6: require("../assets/images/monster_6.png"),
+  monster_7: require("../assets/images/monster_7.png"),
+  monster_8: require("../assets/images/monster_8.png"),
+  monster_9: require("../assets/images/monster_9.png"),
+  monster_10: require("../assets/images/monster_10.png"),
+  monster_11: require("../assets/images/monster_11.png"),
+  monster_12: require("../assets/images/monster_12.png"),
+
   //=========================EXIT=======================
   exitIcon: {
     success: require("../assets/images/green_v2.jpg"),

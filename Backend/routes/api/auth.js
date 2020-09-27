@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("..//../models/UserModel");
+const Progress = require("..//../models/ProgressModel");
 const { registerValidation, loginValidation } = require("..//../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -27,13 +28,17 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+    let progress = new Progress({});
+    await progress.save();
     //create new user; oreder of fields HAS to be like in the reqest
     const user = new User({
       email: req.body.email,
       password: hashedPassword,
-      lastName: req.body.lname,
-      firstName: req.body.fname,
+      lastName: req.body.lastName,
+      firstName: req.body.firstName,
       age: req.body.age,
+      avatar: "no avatar selected yet",
+      progress: progress._id,
     });
     await user.save();
 

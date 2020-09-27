@@ -27,10 +27,21 @@ const RegistrationScreen = (props) => {
 
   const dispatch = useDispatch();
   /* useEffect(() => {
-    if (error) {
-      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    async function changeToPortrait() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT
+      );
+    }
+    
+    //activate the orientation change
+    changeToPortrait();
+    //clean up after exiting the component
+    return async function changeToLandscape() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.LANDSCAPE
+      );
     };
-  }, [error]);  */
+  }); */
 
   const registerHandler = async () => {
     //console.log("INSIDE registerHandler");

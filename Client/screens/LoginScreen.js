@@ -13,35 +13,47 @@ import {
 import bgImage from "../assets/images/main2.jpg";
 import { useDispatch } from "react-redux";
 import { login } from "../store/actions/authActions";
+import { get_user } from "../store/actions/profileActions";
 import { LinearGradient } from "expo-linear-gradient";
-
+//import * as ScreenOrientation from "expo-screen-orientation";
 const BG = require("../assets/images/main2.jpg");
-const { width: WIDTH } = Dimensions.get("window");
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  /*  useEffect(() => {
-    if (error) {
-      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
-    }
-  }, [error]); */
 
-  /* const changeColor = () => {
-    return {};
-  }; */
+  /* useEffect(() => {
+    async function changeToPortrait() {
+      //if (WIDTH > HEIGHT) {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT
+      );
+      //}
+    }
+
+    //activate the orientation change
+    changeToPortrait();
+    //clean up after exiting the component
+    return async function changeToLandscape() {
+      //if (HEIGHT > WIDTH) {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.LANDSCAPE
+      );
+      //}
+    };
+  }); */
 
   const loginHandler = async () => {
     //console.log("LOGIN");
     try {
       await dispatch(login({ email, password })); //activates login in authActions
-      //await dispatch(getprofile());
-      props.navigation.navigate("choise");
+      await dispatch(get_user(email)); // this server call insures avatar is up to date in redux store
+      props.navigation.navigate("avatar");
     } catch (err) {
-      //setError(err.message);
       console.log(err);
     }
   };

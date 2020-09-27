@@ -9,6 +9,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/profile", require("./routes/api/profile"));
 
 app.get("/", (req, res) => {
   console.log("we are at home");

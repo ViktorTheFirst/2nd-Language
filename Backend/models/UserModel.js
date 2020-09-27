@@ -26,6 +26,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  progress: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Progress",
+  },
 });
 
 module.exports = mongoose.model("Users", UserSchema);

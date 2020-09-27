@@ -7,12 +7,14 @@ import LoginScreen from "./screens/LoginScreen";
 import Navigator from "./navigation/navigator";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import authReducer from "./store/reducers/authReducers";
+import profileReducer from "./store/reducers/profileReducers";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
 enableScreens(); //preformance optinization
 const rootReducer = combineReducers({
   authRed: authReducer,
+  profileRed: profileReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
   ImageBackground,
-  TouchableHighlight,
+  Dimensions,
   Image,
 } from "react-native";
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Card from "../components/Card";
+//import * as ScreenOrientation from "expo-screen-orientation";
+import UpperTab from "../components/UpperTab";
 const BG = require("../assets/images/main_1.png");
 
 const DATA = [
@@ -82,6 +85,16 @@ const DATA = [
 ];
 
 const MainScreen = (props) => {
+  /* useEffect(() => {
+    async function changeToPortrait() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT
+      );
+    }
+
+    changeToPortrait();
+  }); */
+
   const renderListItem = ({ item }) => (
     <Card
       title={item.title}
@@ -98,7 +111,7 @@ const MainScreen = (props) => {
   return (
     <ImageBackground style={styles.backgroundContainer} source={BG}>
       <View style={styles.upperTabContainer}>
-        <Text>Upper Tab will be here</Text>
+        <UpperTab navigation={props.navigation} />
       </View>
 
       <View style={styles.flatListContainer}>
@@ -124,17 +137,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   flatListContainer: {
-    flex: 3,
+    flex: 5,
     padding: 20,
     //backgroundColor: "orange",
   },
   upperTabContainer: {
-    flex: 1,
+    flex: 2,
     //backgroundColor: "yellow",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
   bottomSpace: {
     flex: 1,
     //backgroundColor: "green",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

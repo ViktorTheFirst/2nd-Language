@@ -67,10 +67,26 @@ export default class StoryScreen extends Component {
 
   playStory = async () => {
     try {
+      Audio.getPermissionsAsync();
       await this.storySound.playAsync();
       await this.storySound.setPositionAsync(0);
     } catch (err) {
       console.log("Cant play story", err);
+    }
+  };
+
+  record = async () => {
+    console.log("start recording");
+    try {
+      const recording = new Audio.Recording();
+      await recording.prepareToRecordAsync(
+        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+      );
+      await recording.startAsync();
+      //you are now recording
+      console.log(recording.getStatusAsync());
+    } catch (err) {
+      console.log("cant record audio", err);
     }
   };
 
@@ -94,7 +110,12 @@ export default class StoryScreen extends Component {
             </View>
           </View>
           <View style={styles.recordingStar}>
-            <Text>RECORDING STAR HERE</Text>
+            <TouchableOpacity onPress={this.record.bind(this)}>
+              <Image
+                source={require("../assets/images/rec.png")}
+                style={{ width: 70, height: 70 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -146,6 +167,7 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: "center",
     alignItems: "center",
+    //backgroundColor: "orange",
   },
   image: {
     width: 280,

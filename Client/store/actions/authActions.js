@@ -62,7 +62,7 @@ export const login = (data) => async (dispatch) => {
 
     dispatch({
       type: LOGIN,
-      payload: { token: jsonToken.token },
+      payload: { token: jsonToken.token, email: data.email },
     });
     return jsonToken;
   } catch (err) {

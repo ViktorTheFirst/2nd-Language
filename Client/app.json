@@ -17,6 +17,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
+      "requireFullScreen": true,
       "infoPlist": {
         "UIBackgroundModes": ["audio"]
       }

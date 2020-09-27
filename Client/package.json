@@ -33,14 +33,15 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.7",
-    "react-navigation-drawer": "^2.4.12",
+    "react-navigation-drawer": "^2.5.1",
     "react-navigation-header-buttons": "^3.0.5",
     "react-navigation-stack": "^2.3.11",
     "react-navigation-tabs": "^2.8.12",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "react-native-svg": "11.0.1"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.1.0",
