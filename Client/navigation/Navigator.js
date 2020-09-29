@@ -48,34 +48,23 @@ const choiseNav = createStackNavigator(
     },
   }
 );
+
 //========================================================================================
 
-const mainScreenNav = createSwitchNavigator(
+const drawerNav = createDrawerNavigator(
   {
-    loginregister: LoginRegisterNav,
-    choise: choiseNav,
-  },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-  }
-);
-//========================================================================================
-
-/* const drawerNav = createDrawerNavigator(
-  {
+    //hide this item from the drawer navigator
     m: {
+      screen: choiseNav,
+      navigationOptions: {
+        drawerLabel: () => null,
+      },
+    },
+
+    main: {
       screen: MainScreen,
       navigationOptions: {
         drawerLabel: "Main Screen",
-      },
-    },
-    //hide this item from the drawer navigator
-    main: {
-      screen: mainScreenNav,
-      navigationOptions: {
-        drawerLabel: () => null,
       },
     },
     about: {
@@ -92,6 +81,21 @@ const mainScreenNav = createSwitchNavigator(
       headerShown: false,
     },
   }
-); */
+);
+
 //========================================================================================
+
+const mainScreenNav = createSwitchNavigator(
+  {
+    loginregister: LoginRegisterNav,
+    drawer: drawerNav,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+//========================================================================================
+
 export default createAppContainer(mainScreenNav);

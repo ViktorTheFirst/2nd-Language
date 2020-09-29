@@ -15,6 +15,9 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 export default class PriceScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isWinner: props.navigation.getParam("isWinner"),
+    };
   }
 
   render() {
@@ -24,12 +27,17 @@ export default class PriceScreen extends Component {
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>Congratulations!</Text>
           </View>
-          <TouchableOpacity style={styles.imageContainer}>
+          <View style={styles.imageContainer}>
             <Image
               source={require("../assets/images/16.png")}
               style={styles.image}
             />
-          </TouchableOpacity>
+          </View>
+          <View>
+            {this.state.isWinner && (
+              <Text style={styles.headerText}>Level Complete</Text>
+            )}
+          </View>
           <View style={styles.buttonsContainer}>
             <MyButton
               title={"BACK TO MAIN MENU"}

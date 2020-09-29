@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { update_progress } from "../store/actions/profileActions";
 
 const SuccessFail = (props) => {
+  const { email } = useSelector((state) => state.profileRed);
+  const dispatch = useDispatch();
   const [showIcon, setShowIcon] = useState(props.show);
   useEffect(() => {
     if (props.show != showIcon) {
@@ -22,7 +25,18 @@ const SuccessFail = (props) => {
       {showIcon && (
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("price");
+            if (props.isWinner) {
+              //TODO: update server that level is complete
+              //console.log("title is success: ", props.title);
+              //console.log("lessonNum is success: ", props.lesson);
+              dispatch(update_progress(email, props.title, props.lesson));
+            }
+            props.navigation.navigate({
+              routeName: "price",
+              params: {
+                isWinner: props.isWinner,
+              },
+            });
           }}
         >
           <Image source={exitIcon} style={styles.exitIconImage} />

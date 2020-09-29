@@ -22,6 +22,7 @@ export default class WordsScreen extends Component {
     super(props);
 
     this.state = {
+      title: props.navigation.getParam("title"),
       lessonNum: props.navigation.getParam("lesson"),
       qSoundName: props.navigation.getParam("qSound"), //monkey
       a1SoundName: props.navigation.getParam("a1Sound"), //hippo
@@ -47,6 +48,7 @@ export default class WordsScreen extends Component {
       showExitIcon: false,
       isCorrect: 0,
       exitIcon: images2.exitIcon.fail,
+      firstTimeWinner: true,
     };
     //----------------------------------PAN 1-----------------------------------------------
     this.panResponder1 = PanResponder.create({
@@ -69,6 +71,7 @@ export default class WordsScreen extends Component {
           } else {
             this.setState({
               exitIcon: images2.exitIcon.fail,
+              firstTimeWinner: false,
               showExitIcon: true,
             });
           }
@@ -108,6 +111,7 @@ export default class WordsScreen extends Component {
           } else {
             this.setState({
               exitIcon: images2.exitIcon.fail,
+              firstTimeWinner: false,
               showExitIcon: true,
             });
           }
@@ -147,6 +151,7 @@ export default class WordsScreen extends Component {
           } else {
             this.setState({
               exitIcon: images2.exitIcon.fail,
+              firstTimeWinner: false,
               showExitIcon: true,
             });
           }
@@ -247,21 +252,21 @@ export default class WordsScreen extends Component {
     try {
       this.setState({ showAnswer1: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log("Cant show answer image", err);
     }
   };
   playAnswer2 = async () => {
     try {
       this.setState({ showAnswer2: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log("Cant show answer image", err);
     }
   };
   playAnswer3 = async () => {
     try {
       this.setState({ showAnswer3: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log("Cant show answer image", err);
     }
   };
 
@@ -357,6 +362,9 @@ export default class WordsScreen extends Component {
                 navigation={this.props.navigation} //pass the navigation prop to the component
                 show={this.state.showExitIcon}
                 iconType={this.state.exitIcon}
+                isWinner={this.state.firstTimeWinner} //true if answered right the first time
+                title={this.state.title} //lesson type
+                lesson={this.state.lessonNum}
               />
             </View>
           </View>

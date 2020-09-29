@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,9 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import { useSelector } from "react-redux";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Card from "../components/Card";
-//import * as ScreenOrientation from "expo-screen-orientation";
 import UpperTab from "../components/UpperTab";
 const BG = require("../assets/images/main_1.png");
 
@@ -85,15 +85,17 @@ const DATA = [
 ];
 
 const MainScreen = (props) => {
-  /* useEffect(() => {
-    async function changeToPortrait() {
+  //pull user information from REDUX store
+  const { avatar, progress } = useSelector((state) => state.profileRed);
+
+  useEffect(() => {
+    console.log("progreess: ---------", progress);
+    /* async function changeToPortrait() {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT
       );
-    }
-
-    changeToPortrait();
-  }); */
+    } */
+  }, [progress]);
 
   const renderListItem = ({ item }) => (
     <Card

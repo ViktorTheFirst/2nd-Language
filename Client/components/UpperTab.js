@@ -7,9 +7,13 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { useSelector } from "react-redux";
+import { images2 } from "../constants/imageExport";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const UpperTab = (props) => {
+  const { avatar } = useSelector((state) => state.profileRed);
+
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.avatarContainer}>
@@ -18,10 +22,7 @@ const UpperTab = (props) => {
             props.navigation.toggleDrawer();
           }}
         >
-          <Image
-            source={require("../assets/images/ufo.png")}
-            style={styles.avatar}
-          />
+          <Image source={images2[avatar]} style={styles.avatar} />
         </TouchableOpacity>
       </View>
       <View style={styles.proccessContainer}>

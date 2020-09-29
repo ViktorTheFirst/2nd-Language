@@ -45,7 +45,7 @@ const AvatarSelectionScreen = (props) => {
 
   const closeModal = (avatarName) => {
     dispatch(update_avatar(email, avatarName));
-    props.navigation.navigate("choise");
+    props.navigation.navigate("drawer");
   };
 
   return (
@@ -82,7 +82,7 @@ const AvatarSelectionScreen = (props) => {
               {!firstTime && (
                 <TouchableOpacity
                   onPress={() => {
-                    props.navigation.navigate("choise");
+                    props.navigation.navigate("drawer");
                   }}
                 >
                   <Image source={chosenAvatar} style={styles.image} />

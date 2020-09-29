@@ -19,6 +19,7 @@ export default class SoundScreen extends Component {
     super(props);
 
     this.state = {
+      title: props.navigation.getParam("title"),
       lessonNum: props.navigation.getParam("lesson"),
       qSoundName: props.navigation.getParam("qSound"), //ba
       a1SoundName: props.navigation.getParam("a1Sound"), //banana
@@ -42,6 +43,7 @@ export default class SoundScreen extends Component {
       selected2: false,
       selected3: false,
       isCorrect: 0,
+      firstTimeWinner: true,
     };
   }
 
@@ -157,6 +159,7 @@ export default class SoundScreen extends Component {
         } else {
           await this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           setTimeout(() => {
@@ -184,6 +187,7 @@ export default class SoundScreen extends Component {
         } else {
           await this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           setTimeout(() => {
@@ -212,6 +216,7 @@ export default class SoundScreen extends Component {
         } else {
           await this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           setTimeout(() => {
@@ -323,6 +328,9 @@ export default class SoundScreen extends Component {
                 navigation={this.props.navigation} //pass the navigation prop to the component
                 show={this.state.showExitIcon}
                 iconType={this.state.exitIcon}
+                isWinner={this.state.firstTimeWinner}
+                title={this.state.title}
+                lesson={this.state.lessonNum}
               />
             </View>
           </View>

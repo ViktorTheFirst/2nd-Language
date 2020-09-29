@@ -1,19 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { get_user } from "../store/actions/profileActions";
 
 const Card = (props) => {
-  //console.log("props Card is getting: ", props);
-  //console.log("props screen: ", props.goTo);
-  const [color, setColor] = useState("white");
+  const { progress } = useSelector((state) => state.profileRed);
+  const { email } = useSelector((state) => state.authRed);
+  const { soundLvl, wordLvl, sentenceLvl, storyLvl } = progress;
 
-  useEffect(() => {
+  const [color, setColor] = useState("white");
+  const [isDone, setIsDone] = useState(false);
+
+  const dispatch = useDispatch();
+  const func = () => {
     if (props.title == "Sounds") {
       setColor("pink");
+      if (props.lesson < soundLvl) {
+        setIsDone(true);
+      }
     } else if (props.title == "Words") {
       setColor("#3490de");
+      if (props.lesson < wordLvl) {
+        setIsDone(true);
+      }
     } else if (props.title == "Sentence") {
       setColor("#ff4b5c");
+      if (props.lesson < sentenceLvl) {
+        setIsDone(true);
+      }
+    } else if (props.title == "Story") {
+      if (props.lesson < storyLvl) {
+        setIsDone(true);
+      }
     }
+  };
+
+  useEffect(() => {
+    //dispatch(get_user(email));
+
+    func();
   }, []);
 
   return (
@@ -35,11 +60,13 @@ const Card = (props) => {
     >
       <Text>{props.title}</Text>
       <Text>Lesson#: {props.lesson}</Text>
-      <Text>Qestion: {props.qSound}</Text>
+      {/* <Text>Qestion: {props.qSound}</Text>
       <Text>Answers:</Text>
       <Text>{props.a1Sound}</Text>
       <Text>{props.a2Sound}</Text>
-      <Text>{props.a3Sound}</Text>
+      <Text>{props.a3Sound}</Text> */}
+      {isDone && <Text>isDone: YES</Text>}
+      {!isDone && <Text>isDone: NO</Text>}
     </TouchableOpacity>
   );
 };
