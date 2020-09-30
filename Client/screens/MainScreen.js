@@ -86,10 +86,10 @@ const DATA = [
 
 const MainScreen = (props) => {
   //pull user information from REDUX store
-  const { avatar, progress } = useSelector((state) => state.profileRed);
+  const { progress } = useSelector((state) => state.profileRed);
 
   useEffect(() => {
-    console.log("progreess: ---------", progress);
+    //console.log("progreess: ---------", progress);
     /* async function changeToPortrait() {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT
@@ -126,7 +126,7 @@ const MainScreen = (props) => {
       </View>
 
       <View style={styles.bottomSpace}>
-        <Text>Bottom space will be here</Text>
+        <Text>2nd Language - 2020</Text>
       </View>
     </ImageBackground>
   );

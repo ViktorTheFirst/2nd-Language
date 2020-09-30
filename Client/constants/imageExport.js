@@ -93,6 +93,10 @@ const images2 = {
   monster_11: require("../assets/images/monster_11.png"),
   monster_12: require("../assets/images/monster_12.png"),
 
+  //=========================CARDS===============================
+  card_1: require("../assets/images/card_1.jpg"),
+  card_5: require("../assets/images/card_5.png"),
+
   //=========================EXIT=======================
   exitIcon: {
     success: require("../assets/images/green_v2.jpg"),

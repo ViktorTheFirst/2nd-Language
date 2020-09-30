@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,22 @@ import {
 import { useSelector } from "react-redux";
 import { images2 } from "../constants/imageExport";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+import * as Progress from "react-native-progress";
 
 const UpperTab = (props) => {
-  const { avatar } = useSelector((state) => state.profileRed);
+  const { progress, avatar } = useSelector((state) => state.profileRed);
+  const { soundLvl, wordLvl, sentenceLvl, storyLvl } = progress;
+
+  const [barProg, setBarProg] = useState(0.1);
+  const calculateBarProg = () => {
+    const numOfLessons = 7;
+    const lessonsDone = soundLvl + wordLvl + sentenceLvl + storyLvl - 4;
+    setBarProg(lessonsDone / numOfLessons);
+  };
+
+  useEffect(() => {
+    calculateBarProg();
+  });
 
   return (
     <View style={styles.backgroundContainer}>
@@ -26,19 +39,24 @@ const UpperTab = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.proccessContainer}>
-        <Text>
-          -------------------------- process bar will be here
-          ------------------------
-        </Text>
+        <Progress.Bar
+          color="pink"
+          progress={barProg}
+          width={WIDTH / 1.75}
+          height={12}
+          borderRadius={7}
+          borderWidth={3}
+          borderColor="white"
+        />
       </View>
       <View style={styles.garageContainer}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             props.navigation.navigate("test");
           }}
         >
-          <Text>space garage </Text>
-        </TouchableOpacity>
+          <Text> Garage </Text>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

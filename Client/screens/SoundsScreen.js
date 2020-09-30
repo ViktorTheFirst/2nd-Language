@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import imageBG from "../assets/images/sounds_resized.png";
+import imageBG from "../assets/images/main_resized3.png";
 import SuccessFail from "../components/SuccessFail";
 
 import { Audio } from "expo-av";

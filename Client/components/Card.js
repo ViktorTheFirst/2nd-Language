@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { get_user } from "../store/actions/profileActions";
+import { useSelector } from "react-redux";
+import { images2 } from "../constants/imageExport";
 
 const Card = (props) => {
   const { progress } = useSelector((state) => state.profileRed);
-  const { email } = useSelector((state) => state.authRed);
   const { soundLvl, wordLvl, sentenceLvl, storyLvl } = progress;
 
-  const [color, setColor] = useState("white");
+  const [color, setColor] = useState("green");
   const [isDone, setIsDone] = useState(false);
 
-  const dispatch = useDispatch();
-  const func = () => {
+  const progressUpdate = () => {
     if (props.title == "Sounds") {
-      setColor("pink");
+      setColor("#3490de");
       if (props.lesson < soundLvl) {
         setIsDone(true);
       }
     } else if (props.title == "Words") {
-      setColor("#3490de");
+      setColor("pink");
       if (props.lesson < wordLvl) {
         setIsDone(true);
       }
@@ -36,10 +34,9 @@ const Card = (props) => {
   };
 
   useEffect(() => {
-    //dispatch(get_user(email));
-
-    func();
-  }, []);
+    //update the done lessons from redux store
+    progressUpdate();
+  }, [progress]);
 
   return (
     <TouchableOpacity
@@ -58,15 +55,11 @@ const Card = (props) => {
         });
       }}
     >
-      <Text>{props.title}</Text>
+      {/* <Text>{props.title}</Text>
       <Text>Lesson#: {props.lesson}</Text>
-      {/* <Text>Qestion: {props.qSound}</Text>
-      <Text>Answers:</Text>
-      <Text>{props.a1Sound}</Text>
-      <Text>{props.a2Sound}</Text>
-      <Text>{props.a3Sound}</Text> */}
       {isDone && <Text>isDone: YES</Text>}
-      {!isDone && <Text>isDone: NO</Text>}
+      {!isDone && <Text>isDone: NO</Text>} */}
+      <Image source={images2["card_5"]} style={styles.image} />
     </TouchableOpacity>
   );
 };
@@ -75,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     width: 170,
     height: 190,
-    padding: 20,
+    padding: 14,
     marginVertical: 10,
     marginHorizontal: 20,
     borderRadius: 10,
@@ -83,10 +76,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
     elevation: 11,
-    opacity: 0.7,
+    opacity: 1,
   },
   title: {
     fontSize: 32,
+  },
+  image: {
+    width: 170,
+    height: 190,
+    borderRadius: 9,
   },
 });
 

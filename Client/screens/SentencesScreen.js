@@ -21,6 +21,7 @@ export default class SentencesScreen extends Component {
     super(props);
 
     this.state = {
+      title: props.navigation.getParam("title"),
       lessonNum: props.navigation.getParam("lesson"),
       qSoundName: props.navigation.getParam("qSound"), //a monkey eating a banana
       a1SoundName: props.navigation.getParam("a1Sound"), //a green crocodile
@@ -47,6 +48,7 @@ export default class SentencesScreen extends Component {
       pan1: new Animated.ValueXY(),
       pan2: new Animated.ValueXY(),
       pan3: new Animated.ValueXY(),
+      firstTimeWinner: true,
     };
     //----------------------------------PAN 1-----------------------------------------------
     this.panResponder1 = PanResponder.create({
@@ -175,6 +177,7 @@ export default class SentencesScreen extends Component {
           //if this is NOT the correct answer show exit icon - incorrect
           this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           //remove the incorrect icon after 3 seconds
@@ -211,6 +214,7 @@ export default class SentencesScreen extends Component {
         } else {
           this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           //remove the incorrect icon after 3 seconds
@@ -247,6 +251,7 @@ export default class SentencesScreen extends Component {
         } else {
           this.setState({
             exitIcon: images2.exitIcon.fail,
+            firstTimeWinner: false,
             showExitIcon: true,
           });
           //remove the incorrect icon after 3 seconds
@@ -304,6 +309,9 @@ export default class SentencesScreen extends Component {
                 navigation={this.props.navigation} //pass the navigation prop to the component
                 show={this.state.showExitIcon}
                 iconType={this.state.exitIcon}
+                isWinner={this.state.firstTimeWinner} //true if answered right the first time
+                title={this.state.title} //lesson type
+                lesson={this.state.lessonNum}
               />
             </View>
           </View>
