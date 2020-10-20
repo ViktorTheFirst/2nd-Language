@@ -4,7 +4,7 @@ import { enableScreens } from "react-native-screens";
 import * as Font from "expo-font";
 import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
 import LoginScreen from "./screens/LoginScreen";
-import Navigator from "./navigation/navigator";
+import Navigator from "./navigation/Navigator";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import authReducer from "./store/reducers/authReducers";
 import profileReducer from "./store/reducers/profileReducers";

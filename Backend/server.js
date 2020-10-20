@@ -1,19 +1,18 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-require("dotenv/config");
-const bodyParser = require("body-parser");
-const connectDB = require("./config/db");
+require('dotenv/config');
+const bodyParser = require('body-parser');
+const connectDB = require('./config/db');
 
 connectDB();
 
 app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
-app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/profile", require("./routes/api/profile"));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/profile', require('./routes/api/profile'));
 
-app.get("/", (req, res) => {
-  console.log("we are at home");
-  res.send("HOME");
+app.get('/', (req, res) => {
+  res.send('HOME');
   //res.send(req.header);
 });
 

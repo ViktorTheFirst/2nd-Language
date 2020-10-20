@@ -14,6 +14,7 @@ import PriceScreen from "../screens/PriceScreen";
 import AboutScreen from "../screens/AboutScreen";
 import Test from "../screens/Test";
 import AvatarSelectionScreen from "../screens/AvatarSelectionScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 //========================================================================================
 const LoginRegisterNav = createStackNavigator(
@@ -64,19 +65,28 @@ const drawerNav = createDrawerNavigator(
     main: {
       screen: MainScreen,
       navigationOptions: {
-        drawerLabel: "Main Screen",
+        drawerLabel: "Lessons",
+
+        drawerIcon: () => {
+          return <Ionicons name="ios-paper" size={25} color="white" />;
+        },
       },
     },
     about: {
       screen: AboutScreen,
+
       navigationOptions: {
-        drawerLabel: "About 2ndLanguage",
-        //TODO: Drawer Icons
+        drawerLabel: "About",
+        drawerIcon: () => {
+          return (
+            <Ionicons name="ios-information-circle" size={25} color="white" />
+          );
+        },
       },
     },
   },
   {
-    drawerBackgroundColor: "rgba(58, 247, 96,0.9)",
+    drawerBackgroundColor: "#5ebb77",
     defaultNavigationOptions: {
       headerShown: false,
     },

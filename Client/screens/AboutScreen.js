@@ -16,7 +16,7 @@ const AboutScreen = (props) => {
       <View style={styles.upperTabContainer}>
         <UpperTab navigation={props.navigation} />
       </View>
-      <View style={{ flex: 4 }}>
+      <View style={{ flex: 4, alignItems: "center", justifyContent: "center" }}>
         <Text>Information about the application goes here</Text>
       </View>
     </View>

@@ -1,19 +1,17 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const User = require("..//../models/UserModel");
-const Progress = require("..//../models/ProgressModel");
-const { registerValidation, loginValidation } = require("..//../validation");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const User = require('..//../models/UserModel');
+const Progress = require('..//../models/ProgressModel');
+const { registerValidation, loginValidation } = require('..//../validation');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //===========================================================================================
-router.get("/", (req, res) => {
-  res.send("WE ARE AT api/auth");
+router.get('/', (req, res) => {
+  res.send('WE ARE AT api/auth');
 });
 //===========================================================================================
-router.post("/register", async (req, res) => {
-  //console.log("INSIDE auth register");
-  //console.log("req.body: ", req.body);
+router.post('/register', async (req, res) => {
   //validate user before creation
   const { error } = registerValidation(req.body);
 
@@ -22,7 +20,7 @@ router.post("/register", async (req, res) => {
   try {
     //check if user email already in DB
     const emailExist = await User.findOne({ email: req.body.email });
-    if (emailExist) return res.status(400).send("Email already exists");
+    if (emailExist) return res.status(400).send('Email already exists');
 
     //hash the password
     const salt = await bcrypt.genSalt(10);
@@ -37,7 +35,7 @@ router.post("/register", async (req, res) => {
       lastName: req.body.lastName,
       firstName: req.body.firstName,
       age: req.body.age,
-      avatar: "no avatar selected yet",
+      avatar: 'no avatar selected yet',
       progress: progress._id,
     });
     await user.save();
@@ -51,7 +49,6 @@ router.post("/register", async (req, res) => {
       { expiresIn: 36000 },
       (err, token) => {
         if (err) throw err;
-        //console.log("token: ", token);
         res.json({ token });
       }
     );
@@ -61,8 +58,8 @@ router.post("/register", async (req, res) => {
 });
 
 //===========================================================================================
-router.post("/login", async (req, res) => {
-  //console.log("INSIDE auth login");
+router.post('/login', async (req, res) => {
+  console.log('INSIDE auth login');
   //console.log("req.body: ", req.body);
 
   const { error } = loginValidation(req.body);
@@ -75,14 +72,14 @@ router.post("/login", async (req, res) => {
     if (!user)
       return res
         .status(400)
-        .json({ errors: [{ msg: "Invalid Login details" }] });
+        .json({ errors: [{ msg: 'Invalid Login details' }] });
 
     //check if the password is correct
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
       return res
         .status(400)
-        .json({ errors: [{ msg: "Invalid Login details" }] });
+        .json({ errors: [{ msg: 'Invalid Login details' }] });
 
     const payload = { user: { id: user.id } };
 

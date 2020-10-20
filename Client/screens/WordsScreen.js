@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Image,
   StyleSheet,
@@ -9,37 +9,37 @@ import {
   View,
   PanResponder,
   Animated,
-} from "react-native";
-import imageBG from "../assets/images/18.png";
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-import { Audio } from "expo-av";
-import { images2 } from "../constants/imageExport";
-import { sounds } from "../constants/soundExport";
-import SuccessFail from "..//components/SuccessFail";
+} from 'react-native';
+import imageBG from '../assets/images/18.png';
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
+import { Audio } from 'expo-av';
+import { images2 } from '../constants/imageExport';
+import { sounds } from '../constants/soundExport';
+import SuccessFail from '..//components/SuccessFail';
 
 export default class WordsScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: props.navigation.getParam("title"),
-      lessonNum: props.navigation.getParam("lesson"),
-      qSoundName: props.navigation.getParam("qSound"), //monkey
-      a1SoundName: props.navigation.getParam("a1Sound"), //hippo
-      a2SoundName: props.navigation.getParam("a2Sound"),
-      a3SoundName: props.navigation.getParam("a3Sound"),
-      qSound: sounds[props.navigation.getParam("qSound")], //require("../assets/sounds/monkey.wav")
-      a1Sound: sounds[props.navigation.getParam("a1Sound")],
-      a2Sound: sounds[props.navigation.getParam("a2Sound")],
-      a3Sound: sounds[props.navigation.getParam("a3Sound")],
+      title: props.navigation.getParam('title'),
+      lessonNum: props.navigation.getParam('lesson'),
+      qSoundName: props.navigation.getParam('qSound'), //monkey
+      a1SoundName: props.navigation.getParam('a1Sound'), //hippo
+      a2SoundName: props.navigation.getParam('a2Sound'),
+      a3SoundName: props.navigation.getParam('a3Sound'),
+      qSound: sounds[props.navigation.getParam('qSound')], //require("../assets/sounds/monkey.wav")
+      a1Sound: sounds[props.navigation.getParam('a1Sound')],
+      a2Sound: sounds[props.navigation.getParam('a2Sound')],
+      a3Sound: sounds[props.navigation.getParam('a3Sound')],
       showQuestion: false,
       showAnswer1: false,
       showAnswer2: false,
       showAnswer3: false,
       answer: images2.jupiter,
-      answer1: images2[props.navigation.getParam("a1Sound")],
-      answer2: images2[props.navigation.getParam("a2Sound")],
-      answer3: images2[props.navigation.getParam("a3Sound")],
+      answer1: images2[props.navigation.getParam('a1Sound')],
+      answer2: images2[props.navigation.getParam('a2Sound')],
+      answer3: images2[props.navigation.getParam('a3Sound')],
       showDraggable: true,
       dropZoneValues: null,
       pan1: new Animated.ValueXY(),
@@ -174,9 +174,6 @@ export default class WordsScreen extends Component {
 
   isDropZone(gesture) {
     const dz = this.state.dropZoneValues;
-    /* console.log("dropzone: ", dz);
-    console.log("gesture.moveX: ", gesture.moveX);
-    console.log("gesture.moveY: ", gesture.moveY); */
     return (
       gesture.moveX > WIDTH / 4 &&
       gesture.moveX < WIDTH - WIDTH / 4 &&
@@ -185,7 +182,6 @@ export default class WordsScreen extends Component {
   }
 
   setDropZoneValues(event) {
-    //console.log("event:", event);
     this.setState({
       dropZoneValues: event.nativeEvent.layout,
     });
@@ -206,7 +202,7 @@ export default class WordsScreen extends Component {
         true
       );
     } catch (err) {
-      console.log("error loading sounds", err);
+      console.log('error loading sounds', err);
     }
     Audio.setIsEnabledAsync(true);
     Audio.setAudioModeAsync({
@@ -244,7 +240,7 @@ export default class WordsScreen extends Component {
       }, 1000);
       this.questionSound.setPositionAsync(0);
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log('Cant play audio', err);
     }
   };
 
@@ -252,21 +248,21 @@ export default class WordsScreen extends Component {
     try {
       this.setState({ showAnswer1: true });
     } catch (err) {
-      console.log("Cant show answer image", err);
+      console.log('Cant show answer image', err);
     }
   };
   playAnswer2 = async () => {
     try {
       this.setState({ showAnswer2: true });
     } catch (err) {
-      console.log("Cant show answer image", err);
+      console.log('Cant show answer image', err);
     }
   };
   playAnswer3 = async () => {
     try {
       this.setState({ showAnswer3: true });
     } catch (err) {
-      console.log("Cant show answer image", err);
+      console.log('Cant show answer image', err);
     }
   };
 
@@ -274,11 +270,16 @@ export default class WordsScreen extends Component {
     return (
       <ImageBackground source={imageBG} style={styles.backgroundContainer}>
         {/* --------------------------------------HEADER------------------------------------------------ */}
-        <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.header}
+          onPress={() => {
+            this.props.navigation.navigate('main');
+          }}
+        >
           <Text style={styles.headerText}>
             Words Lesson {this.state.lessonNum}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.grid}>
           <View style={styles.answerRow}>
             {/* --------------------------------------ANSWER 1------------------------------------------------ */}
@@ -351,7 +352,7 @@ export default class WordsScreen extends Component {
                 onLayout={this.setDropZoneValues.bind(this)} //bind this area to be drop zone
               >
                 <Image
-                  source={require("../assets/images/p1.png")}
+                  source={require('../assets/images/p1.png')}
                   style={styles.questionImage}
                 />
               </TouchableOpacity>
@@ -377,7 +378,7 @@ export default class WordsScreen extends Component {
 const styles = StyleSheet.create({
   grid: {
     flex: 8,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   questionImageAndpopup: {
     flex: 2,
@@ -386,28 +387,28 @@ const styles = StyleSheet.create({
   },
   questionRow: {
     flex: 8,
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     //alignItems: "center",
     //backgroundColor: "green",
   },
   questionText: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
   },
   answerRow: {
     flex: 7,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: "yellow",
   },
   answerImageContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: 160,
@@ -421,8 +422,8 @@ const styles = StyleSheet.create({
   },
   questionImageContainer: {
     flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "orange",
   },
   freeSpace: {
@@ -431,31 +432,31 @@ const styles = StyleSheet.create({
   questionPopup: {
     flex: 1,
     //backgroundColor: "blue",
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   exit: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "brown",
   },
   backgroundContainer: {
     flex: 1,
     //justifyContent: "center",
     //alignItems: "center",
-    flexDirection: "column",
+    flexDirection: 'column',
     width: null,
     height: null,
   },
   header: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
   },
 });

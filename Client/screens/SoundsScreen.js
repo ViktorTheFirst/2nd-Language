@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Image,
   StyleSheet,
@@ -6,37 +6,37 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import imageBG from "../assets/images/main_resized3.png";
-import SuccessFail from "../components/SuccessFail";
+} from 'react-native';
+import imageBG from '../assets/images/20.jpg';
+import SuccessFail from '../components/SuccessFail';
 
-import { Audio } from "expo-av";
-import { images2 } from "../constants/imageExport";
-import { sounds } from "../constants/soundExport";
+import { Audio } from 'expo-av';
+import { images2 } from '../constants/imageExport';
+import { sounds } from '../constants/soundExport';
 
 export default class SoundScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: props.navigation.getParam("title"),
-      lessonNum: props.navigation.getParam("lesson"),
-      qSoundName: props.navigation.getParam("qSound"), //ba
-      a1SoundName: props.navigation.getParam("a1Sound"), //banana
-      a2SoundName: props.navigation.getParam("a2Sound"),
-      a3SoundName: props.navigation.getParam("a3Sound"),
-      qSound: sounds[props.navigation.getParam("qSound")], //require("../assets/sounds/ba.wav")
-      a1Sound: sounds[props.navigation.getParam("a1Sound")],
-      a2Sound: sounds[props.navigation.getParam("a2Sound")],
-      a3Sound: sounds[props.navigation.getParam("a3Sound")],
+      title: props.navigation.getParam('title'),
+      lessonNum: props.navigation.getParam('lesson'),
+      qSoundName: props.navigation.getParam('qSound'), //ba
+      a1SoundName: props.navigation.getParam('a1Sound'), //banana
+      a2SoundName: props.navigation.getParam('a2Sound'),
+      a3SoundName: props.navigation.getParam('a3Sound'),
+      qSound: sounds[props.navigation.getParam('qSound')], //require("../assets/sounds/ba.wav")
+      a1Sound: sounds[props.navigation.getParam('a1Sound')],
+      a2Sound: sounds[props.navigation.getParam('a2Sound')],
+      a3Sound: sounds[props.navigation.getParam('a3Sound')],
       showQuestion: false,
       showAnswer1: false,
       showAnswer2: false,
       showAnswer3: false,
       answer: images2.jupiter,
-      answer1: images2[props.navigation.getParam("a1Sound")],
-      answer2: images2[props.navigation.getParam("a2Sound")],
-      answer3: images2[props.navigation.getParam("a3Sound")],
+      answer1: images2[props.navigation.getParam('a1Sound')],
+      answer2: images2[props.navigation.getParam('a2Sound')],
+      answer3: images2[props.navigation.getParam('a3Sound')],
       showExitIcon: false,
       exitIcon: images2.exitIcon.fail,
       selected1: false,
@@ -115,7 +115,7 @@ export default class SoundScreen extends Component {
         this.setState({ isCorrect: 3 });
       }
     } catch (err) {
-      console.log("error loading sounds", err);
+      console.log('error loading sounds', err);
     }
   }
 
@@ -144,7 +144,7 @@ export default class SoundScreen extends Component {
       }, 1000);
       await this.questionSound.setPositionAsync(0);
     } catch (err) {
-      console.log("Cant play question", err);
+      console.log('Cant play question', err);
     }
   };
 
@@ -173,7 +173,7 @@ export default class SoundScreen extends Component {
       await this.answerSound_1.setPositionAsync(0);
       await this.setState({ selected1: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log('Cant play audio', err);
     }
   };
   playAnswer2 = async () => {
@@ -201,7 +201,7 @@ export default class SoundScreen extends Component {
       await this.answerSound_2.setPositionAsync(0);
       await this.setState({ selected2: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log('Cant play audio', err);
     }
   };
 
@@ -230,7 +230,7 @@ export default class SoundScreen extends Component {
       await this.answerSound_3.setPositionAsync(0);
       await this.setState({ selected3: true });
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log('Cant play audio', err);
     }
   };
 
@@ -238,11 +238,16 @@ export default class SoundScreen extends Component {
     return (
       <ImageBackground source={imageBG} style={styles.backgroundContainer}>
         {/* --------------------------------------HEADER------------------------------------------------ */}
-        <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.header}
+          onPress={() => {
+            this.props.navigation.navigate('main');
+          }}
+        >
           <Text style={styles.headerText}>
             Sounds Lesson {this.state.lessonNum}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.grid}>
           <View style={styles.answerRow}>
             {/* --------------------------------------ANSWER 1------------------------------------------------ */}
@@ -317,7 +322,7 @@ export default class SoundScreen extends Component {
                 style={styles.questionImageContainer}
               >
                 <Image
-                  source={require("../assets/images/p1.png")}
+                  source={require('../assets/images/p1.png')}
                   style={styles.questionImage}
                 />
               </TouchableOpacity>
@@ -343,12 +348,12 @@ export default class SoundScreen extends Component {
 const styles = StyleSheet.create({
   grid: {
     flex: 8,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   questionRow: {
     flex: 8,
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     //alignItems: "center",
     //backgroundColor: "green",
   },
@@ -357,16 +362,16 @@ const styles = StyleSheet.create({
   },
   questionText: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
     //backgroundColor: "green",
   },
   answerRow: {
     flex: 7,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: "yellow",
   },
   image: {
@@ -379,23 +384,23 @@ const styles = StyleSheet.create({
   },
   questionImageContainer: {
     flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "orange",
   },
   questionPopup: {
     flex: 1,
     //backgroundColor: "blue",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   answerImageAndText: {
     marginHorizontal: 10,
   },
   exit: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "brown",
   },
   questionImageAndpopup: {
@@ -407,34 +412,34 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: "center",
     //alignItems: "center",
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   header: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
   },
 
   /* ----------------------------------------------------------------------------- */
   answer2TextContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     //backgroundColor: "coral",
   },
   answer3TextContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     //backgroundColor: "indigo",
   },
   textContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     //backgroundColor: "purple",
   },
 });

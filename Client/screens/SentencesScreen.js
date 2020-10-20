@@ -270,16 +270,19 @@ export default class SentencesScreen extends Component {
     return (
       <ImageBackground source={imageBG} style={styles.backgroundContainer}>
         {/* ---------------------------HEADER----------------------------------------------- */}
-        <View
+        <TouchableOpacity
           style={{
             flex: 1,
             justifyContent: "flex-end",
+          }}
+          onPress={() => {
+            this.props.navigation.navigate("main");
           }}
         >
           <Text style={styles.headerText}>
             Sentence Lesson {this.state.lessonNum}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.grid}>
           {/* ---------------------------QUESTION----------------------------------------------- */}
           <View style={styles.questionContainer}>

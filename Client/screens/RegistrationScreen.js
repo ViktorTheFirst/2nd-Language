@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
-  Alert,
+  Image,
   View,
   Text,
   StyleSheet,
@@ -8,22 +8,33 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-} from "react-native";
+  Platform,
+  ScrollView,
+} from 'react-native';
 
-import { register } from "../store/actions/authActions";
-import { useDispatch } from "react-redux";
-import bgImage from "../assets/images/regBG.jpg";
-import MyButton from "../components/MyButton";
-const { width: WIDTH } = Dimensions.get("window");
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { register } from '../store/actions/authActions';
+import { useDispatch } from 'react-redux';
+import bgImage from '../assets/images/main_resized.jpg';
+import logo from '../assets/images/Logo.png';
+
+const { width: WIDTH } = Dimensions.get('window');
 
 const RegistrationScreen = (props) => {
-  const [firstName, setfName] = useState("");
-  const [lastName, setlName] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [error, setError] = useState(null);
+  const [firstName, setfName] = useState('');
+  const [lastName, setlName] = useState('');
+  const [age, setAge] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+  const [color, setColor] = useState('white'); //placeholder text color
+
+  async function changeToPortrait() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.PORTRAIT
+    );
+  }
+  changeToPortrait();
 
   const dispatch = useDispatch();
   /* useEffect(() => {
@@ -44,144 +55,160 @@ const RegistrationScreen = (props) => {
   }); */
 
   const registerHandler = async () => {
-    //console.log("INSIDE registerHandler");
-    setError(null);
-    if (password != password2) {
-      setError("Password should mach");
-      return;
-    }
+    //TODO: validation here <-------------------------
     try {
-      await dispatch(register({ email, password, lastName, firstName, age })); //activates register in authActions
+      await dispatch(register({ email, password, lastName, firstName, age }));
       //await dispatch(getprofile());
 
-      props.navigation.navigate("Login");
+      props.navigation.navigate('Login');
     } catch (err) {
-      setError(err.message);
+      console.log(err);
     }
   };
   return (
     <ImageBackground style={styles.backgroundContainer} source={bgImage}>
+      <View style={styles.header}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder={"First name"}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
+          placeholder='First Name'
+          placeholderTextColor={color}
           style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => setfName(text)}
           value={firstName}
         />
-      </View>
-      <View style={styles.inputContainer}>
+
         <TextInput
-          placeholder={"Last name"}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
+          placeholder='Last name'
+          placeholderTextColor={color}
           style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => setlName(text)}
           value={lastName}
         />
-      </View>
-      <View style={styles.inputContainer}>
+
         <TextInput
-          placeholder={"Age"}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
+          placeholder='Email'
+          keyboardType='email-address'
+          placeholderTextColor={color}
           style={styles.input}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setAge(text)}
-          value={age}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder={"Email"}
-          keyboardType="email-address"
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
-          style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
-      </View>
-      <View style={styles.inputContainer}>
+
         <TextInput
-          placeholder={"Password"}
+          placeholder='Password'
           secureTextEntry={true}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
+          placeholderTextColor={color}
           style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
-      </View>
-      <View style={styles.inputContainer}>
+
         <TextInput
-          placeholder={"Repeat Password"}
+          placeholder='Repeat Password'
           secureTextEntry={true}
-          placeholderTextColor={"rgba(255,255,255,0.7)"}
+          placeholderTextColor={color}
           style={styles.input}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => setPassword2(text)}
           value={password2}
         />
       </View>
+      <View style={styles.btnContainer}>
+        <TouchableOpacity style={styles.btnRegister} onPress={registerHandler}>
+          <Text style={styles.btnText}>Register</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btnRegister} onPress={registerHandler}>
-        <Text style={styles.btnText}>Register</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.btnLogin}
-        onPress={() => props.navigation.navigate("Login")}
-      >
-        <Text style={{ ...styles.btnText, color: "red" }}>
-          Already registered
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btnLogin}
+          onPress={() => props.navigation.navigate('Login')}
+        >
+          <Text style={{ ...styles.btnText, color: 'coral' }}>
+            Already registered
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   backgroundContainer: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: null,
-    height: null,
-  },
-  input: {
-    width: WIDTH - 55,
-    height: 45,
-    borderRadius: 25,
-    fontSize: 16,
-    paddingLeft: 45,
-    backgroundColor: "rgba(174,92,218,0.7)",
-    color: "rgba(255,255,255,0.7)",
-    marginHorizontal: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.98,
   },
   inputContainer: {
-    marginTop: 10,
+    width: '100%',
+    display: 'flex',
+    flex: 4,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'pink',
+  },
+  btnContainer: {
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flex: 2,
+    //backgroundColor: 'white',
+  },
+  input: {
+    width: '80%',
+    height: 45,
+    borderBottomLeftRadius: 100,
+    borderTopRightRadius: 100,
+    fontSize: 16,
+    paddingLeft: 45,
+    marginVertical: 5,
+    backgroundColor: 'rgba(174,92,218,0.7)',
+    color: 'rgba(255,255,255,0.7)',
+    marginHorizontal: 25,
   },
   btnLogin: {
-    width: WIDTH - 55,
+    width: '60%',
     height: 45,
-    borderRadius: 25,
-    backgroundColor: "#5288de",
-    justifyContent: "center",
+
+    borderBottomEndRadius: 200,
+    borderTopStartRadius: 200,
+    backgroundColor: 'rgba(184, 210, 51,1.0)',
+    justifyContent: 'center',
     marginTop: 10,
   },
   btnRegister: {
-    width: WIDTH - 55,
+    width: '60%',
     height: 45,
-    borderRadius: 25,
-    backgroundColor: "#5288de",
-    justifyContent: "center",
+    borderBottomEndRadius: 200,
+    borderTopStartRadius: 200,
+    backgroundColor: 'rgba(10, 146, 168,1.0)',
+    justifyContent: 'center',
     marginTop: 30,
   },
   btnText: {
     fontSize: 16,
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
+  },
+  header: {
+    //backgroundColor: 'coral',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    flex: 2,
+  },
+  logo: {
+    width: '100%',
+    height: '100%',
   },
 });
 export default RegistrationScreen;

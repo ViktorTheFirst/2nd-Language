@@ -1,12 +1,10 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
-  const token = req.header("auth-token");
-  //console.log("TOKEN INSIDE VERIFY:", token);
-  //console.log("process.env.SECRET_TOKEN:", process.env.TOKEN_SECRET);
+  const token = req.header('auth-token');
 
   if (!token) {
-    return res.status(401).json({ msg: "No token,authorization denied" });
+    return res.status(401).json({ msg: 'No token,authorization denied' });
   }
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -14,6 +12,6 @@ module.exports = function (req, res, next) {
     req.user = verified.user;
     next();
   } catch (err) {
-    res.status(401).json({ msg: "Token is not valid" });
+    res.status(401).json({ msg: 'Token is not valid' });
   }
 };

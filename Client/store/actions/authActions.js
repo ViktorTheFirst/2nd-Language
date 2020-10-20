@@ -1,24 +1,22 @@
-import { REGISTER, LOGIN } from "./const";
+import { REGISTER, LOGIN } from './const';
 
-const yourIPadress = "http://192.168.0.86:5000";
+const yourIPadress = 'http://192.168.0.86:5000';
 
 //===========================================================================================
 export const register = (data) => async (dispatch) => {
-  //console.log("INSIDE auth actions register");
-  //console.log("data: ", data);
   try {
     const regToken = await fetch(`${yourIPadress}/api/auth/register`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify(data),
     });
 
     if (!regToken.ok) {
       const errorResData = await regToken.json();
-      let message = "Registration failed";
+      let message = 'Registration failed';
       if (errorResData && errorResData.errors.length > 0)
         message = errorResData.errors[0].msg;
       throw new Error(message);
@@ -38,21 +36,19 @@ export const register = (data) => async (dispatch) => {
 //===========================================================================================
 
 export const login = (data) => async (dispatch) => {
-  //console.log("INSIDE auth actions login");
-  //console.log("data: ", data);
   try {
     const loginToken = await fetch(`${yourIPadress}/api/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify(data),
     });
 
     if (!loginToken.ok) {
       const errorResData = await loginToken.json();
-      let message = "Login failed";
+      let message = 'Login failed';
       if (errorResData && errorResData.errors.length > 0)
         message = errorResData.errors[0].msg;
       throw new Error(message);

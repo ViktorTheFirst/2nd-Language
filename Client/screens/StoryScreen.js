@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState, Component } from 'react';
 import {
   Animated,
   StyleSheet,
@@ -9,23 +9,23 @@ import {
   Image,
   Dimensions,
   ImageBackground,
-} from "react-native";
+} from 'react-native';
 
-import imageBG from "../assets/images/19.png";
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-import { Audio } from "expo-av";
-import { images2 } from "../constants/imageExport";
-import { sounds } from "../constants/soundExport";
+import imageBG from '../assets/images/19.png';
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
+import { Audio } from 'expo-av';
+import { images2 } from '../constants/imageExport';
+import { sounds } from '../constants/soundExport';
 
 export default class StoryScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      lessonNum: props.navigation.getParam("lesson"),
-      qSoundName: props.navigation.getParam("qSound"), //one_two_three
-      qSound: sounds[props.navigation.getParam("qSound")], // require("../assets/sounds/one_two_three.mp3")
-      storyImage: images2[props.navigation.getParam("qSound")],
+      lessonNum: props.navigation.getParam('lesson'),
+      qSoundName: props.navigation.getParam('qSound'), //one_two_three
+      qSound: sounds[props.navigation.getParam('qSound')], // require("../assets/sounds/one_two_three.mp3")
+      storyImage: images2[props.navigation.getParam('qSound')],
     };
   }
 
@@ -53,7 +53,7 @@ export default class StoryScreen extends Component {
         true
       );
     } catch (err) {
-      console.log("error loading sounds", err);
+      console.log('error loading sounds', err);
     }
   }
 
@@ -71,33 +71,37 @@ export default class StoryScreen extends Component {
       await this.storySound.playAsync();
       await this.storySound.setPositionAsync(0);
     } catch (err) {
-      console.log("Cant play story", err);
+      console.log('Cant play story', err);
     }
   };
 
   record = async () => {
-    console.log("start recording");
+    console.log('start recording');
     try {
       const recording = new Audio.Recording();
       await recording.prepareToRecordAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
       await recording.startAsync();
-      //you are now recording
       console.log(recording.getStatusAsync());
     } catch (err) {
-      console.log("cant record audio", err);
+      console.log('cant record audio', err);
     }
   };
 
   render() {
     return (
       <ImageBackground style={styles.backgroundContainer} source={imageBG}>
-        <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.header}
+          onPress={() => {
+            this.props.navigation.navigate('main');
+          }}
+        >
           <Text style={styles.headerText}>
             Story Lesson {this.state.lessonNum}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.grid}>
           <View style={styles.imageAndTextContainer}>
             <View style={styles.imageContainer}>
@@ -112,7 +116,7 @@ export default class StoryScreen extends Component {
           <View style={styles.recordingStar}>
             <TouchableOpacity onPress={this.record.bind(this)}>
               <Image
-                source={require("../assets/images/rec.png")}
+                source={require('../assets/images/rec.png')}
                 style={{ width: 70, height: 70 }}
               />
             </TouchableOpacity>
@@ -126,53 +130,53 @@ export default class StoryScreen extends Component {
 const styles = StyleSheet.create({
   backgroundContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flex: 2,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "pink",
   },
   headerText: {
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
   },
   grid: {
-    flexDirection: "column",
+    flexDirection: 'column',
     flex: 9,
     //backgroundColor: "blue",
   },
   imageAndTextContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 5,
     //backgroundColor: "gray",
     width: WIDTH - 20,
   },
   imageContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
   },
   textContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "orange",
   },
   recordingStar: {
     flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     //backgroundColor: "orange",
   },
   image: {
     width: 280,
     height: 150,
-    borderColor: "white",
+    borderColor: 'white',
     borderWidth: 6,
   },
 });

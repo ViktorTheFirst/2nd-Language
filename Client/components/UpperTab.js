@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { useSelector } from "react-redux";
-import { images2 } from "../constants/imageExport";
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-import * as Progress from "react-native-progress";
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import { images2 } from '../constants/imageExport';
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
+import * as Progress from 'react-native-progress';
 
 const UpperTab = (props) => {
   const { progress, avatar } = useSelector((state) => state.profileRed);
@@ -39,24 +39,18 @@ const UpperTab = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.proccessContainer}>
+        <Text style={styles.progressText}>Beginner</Text>
         <Progress.Bar
-          color="pink"
+          style={styles.progressBar}
+          color='pink'
           progress={barProg}
           width={WIDTH / 1.75}
           height={12}
           borderRadius={7}
           borderWidth={3}
-          borderColor="white"
+          borderColor='white'
         />
-      </View>
-      <View style={styles.garageContainer}>
-        {/* <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate("test");
-          }}
-        >
-          <Text> Garage </Text>
-        </TouchableOpacity> */}
+        <Text style={styles.progressText}>Advanced</Text>
       </View>
     </View>
   );
@@ -65,33 +59,41 @@ const UpperTab = (props) => {
 const styles = StyleSheet.create({
   backgroundContainer: {
     flex: 1,
-    flexDirection: "row",
-    backgroundColor: "rgba(114, 170, 204, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "70%",
+    flexDirection: 'row',
+    backgroundColor: 'rgba(114, 170, 204, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '70%',
   },
   avatarContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    //backgroundColor: "orange",
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'orange',
   },
   avatar: {
     width: 70,
     height: 70,
     borderRadius: 100 / 2,
-    borderColor: "white",
+    borderColor: 'white',
     borderWidth: 4,
   },
   proccessContainer: {
     flex: 3,
-    //backgroundColor: "pink",
+    minHeight: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    //backgroundColor: 'pink',
   },
-  garageContainer: {
+  progressBar: {
+    flex: 2,
+  },
+  progressText: {
     flex: 1,
-    //backgroundColor: "yellow",
+    textAlign: 'center',
+    //backgroundColor: 'green',
   },
 });
 export default UpperTab;
