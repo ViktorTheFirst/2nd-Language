@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
   ImageBackground,
-  Dimensions,
   Platform,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
+import { connect } from 'react-redux';
 import Card from '../components/Card';
 import UpperTab from '../components/UpperTab';
 const BG = require('../assets/images/main_1.png');
@@ -84,24 +82,30 @@ const DATA = [
   },
 ];
 
-const MainScreen = (props) => {
-  //pull user information from REDUX store
-  const { progress } = useSelector((state) => state.profileRed);
+class MainScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  useEffect(() => {
-    /* async function changeToPortrait() {
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.PORTRAIT
-      );
-    } */
-  }, [progress]);
+  componentDidMount() {
+    console.log('[MainScreen] - componentDidMount');
+  }
 
-  const renderListItem = ({ item }) => (
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.progress !== this.props.progress) {
+      console.log('[MainScreen] - shouldComponentUpdate - TRUE');
+      return true;
+    }
+    console.log('[MainScreen] - shouldComponentUpdate - FALSE');
+    return false;
+  }
+
+  renderListItem = ({ item }) => (
     <Card
       title={item.title}
       lesson={item.lessonNum}
       goTo={item.screen}
-      navigation={props.navigation}
+      navigation={this.props.navigation}
       qSound={item.questionSound}
       a1Sound={item.answer_1_sound}
       a2Sound={item.answer_2_sound}
@@ -109,34 +113,44 @@ const MainScreen = (props) => {
     />
   );
 
-  return (
-    <ImageBackground style={styles.backgroundContainer} source={BG}>
-      {Platform.OS == 'android' ? (
-        <View style={styles.upperTabContainerAndroid}>
-          <UpperTab navigation={props.navigation} />
-        </View>
-      ) : (
-        <View style={styles.upperTabContainer}>
-          <UpperTab navigation={props.navigation} />
-        </View>
-      )}
+  render() {
+    return (
+      <ImageBackground style={styles.backgroundContainer} source={BG}>
+        {Platform.OS == 'android' ? (
+          <View style={styles.upperTabContainerAndroid}>
+            <UpperTab
+              navigation={this.props.navigation}
+              progress={this.props.progress}
+              avatar={this.props.avatar}
+            />
+          </View>
+        ) : (
+          <View style={styles.upperTabContainer}>
+            <UpperTab
+              navigation={this.props.navigation}
+              progress={this.props.progress}
+              avatar={this.props.avatar}
+            />
+          </View>
+        )}
 
-      <View style={styles.flatListContainer}>
-        <FlatList
-          horizontal={true}
-          data={DATA}
-          renderItem={renderListItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+        <View style={styles.flatListContainer}>
+          <FlatList
+            horizontal={true}
+            data={DATA}
+            renderItem={this.renderListItem}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
 
-      <View style={styles.bottomSpace}>
-        <Text>2nd Language - 2020</Text>
-        {/* <Text>platform: {Platform.OS}</Text> */}
-      </View>
-    </ImageBackground>
-  );
-};
+        <View style={styles.bottomSpace}>
+          <Text>2nd Language - 2020</Text>
+          {/* <Text>platform: {Platform.OS}</Text> */}
+        </View>
+      </ImageBackground>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   backgroundContainer: {
@@ -173,4 +187,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MainScreen;
+const mapStateToProps = (state) => {
+  const { progress, avatar } = state.profileRed;
+  return {
+    progress,
+    avatar,
+  };
+};
+
+export default connect(mapStateToProps, null)(MainScreen);

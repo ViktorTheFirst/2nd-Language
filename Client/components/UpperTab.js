@@ -7,16 +7,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { images2 } from '../constants/imageExport';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 import * as Progress from 'react-native-progress';
 
 const UpperTab = (props) => {
-  const { progress, avatar } = useSelector((state) => state.profileRed);
-  const { soundLvl, wordLvl, sentenceLvl, storyLvl } = progress;
+  const { soundLvl, wordLvl, sentenceLvl, storyLvl } = props.progress;
 
-  const [barProg, setBarProg] = useState(0.1);
+  const [barProg, setBarProg] = useState(0);
   const calculateBarProg = () => {
     const numOfLessons = 7;
     const lessonsDone = soundLvl + wordLvl + sentenceLvl + storyLvl - 4;
@@ -24,6 +22,7 @@ const UpperTab = (props) => {
   };
 
   useEffect(() => {
+    console.log('[UpperTab] - useEffect');
     calculateBarProg();
   });
 
@@ -35,7 +34,7 @@ const UpperTab = (props) => {
             props.navigation.toggleDrawer();
           }}
         >
-          <Image source={images2[avatar]} style={styles.avatar} />
+          <Image source={images2[props.avatar]} style={styles.avatar} />
         </TouchableOpacity>
       </View>
       <View style={styles.proccessContainer}>
@@ -45,7 +44,7 @@ const UpperTab = (props) => {
           color='pink'
           progress={barProg}
           width={WIDTH / 1.75}
-          height={12}
+          height={14}
           borderRadius={7}
           borderWidth={3}
           borderColor='white'
@@ -93,6 +92,7 @@ const styles = StyleSheet.create({
   progressText: {
     flex: 1,
     textAlign: 'center',
+    fontWeight: 'bold',
     //backgroundColor: 'green',
   },
 });

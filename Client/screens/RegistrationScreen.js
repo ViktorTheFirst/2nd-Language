@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   View,
@@ -8,134 +8,127 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  Platform,
-  ScrollView,
 } from 'react-native';
 
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { register } from '../store/actions/authActions';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import bgImage from '../assets/images/main_resized.jpg';
 import logo from '../assets/images/Logo.png';
 
-const { width: WIDTH } = Dimensions.get('window');
+class RegistrationScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      password2: '',
+      color: 'white', //placeholder color
+    };
+  }
 
-const RegistrationScreen = (props) => {
-  const [firstName, setfName] = useState('');
-  const [lastName, setlName] = useState('');
-  const [age, setAge] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [color, setColor] = useState('white'); //placeholder text color
-
-  async function changeToPortrait() {
+  async componentDidMount() {
     await ScreenOrientation.lockAsync(
       ScreenOrientation.OrientationLock.PORTRAIT
     );
   }
-  changeToPortrait();
 
-  const dispatch = useDispatch();
-  /* useEffect(() => {
-    async function changeToPortrait() {
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.PORTRAIT
-      );
-    }
-    
-    //activate the orientation change
-    changeToPortrait();
-    //clean up after exiting the component
-    return async function changeToLandscape() {
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.LANDSCAPE
-      );
-    };
-  }); */
-
-  const registerHandler = async () => {
+  registerHandler = async () => {
     //TODO: validation here <-------------------------
+    const { email, password, lastName, firstName } = this.state;
     try {
-      await dispatch(register({ email, password, lastName, firstName, age }));
+      const token = await this.props.onRegister(
+        email,
+        password,
+        lastName,
+        firstName
+      );
       //await dispatch(getprofile());
-
-      props.navigation.navigate('Login');
+      if (token) {
+        this.props.navigation.navigate('Login');
+      }
     } catch (err) {
       console.log(err);
     }
   };
-  return (
-    <ImageBackground style={styles.backgroundContainer} source={bgImage}>
-      <View style={styles.header}>
-        <Image source={logo} style={styles.logo} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder='First Name'
-          placeholderTextColor={color}
-          style={styles.input}
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => setfName(text)}
-          value={firstName}
-        />
+  render() {
+    return (
+      <ImageBackground style={styles.backgroundContainer} source={bgImage}>
+        <View style={styles.header}>
+          <Image source={logo} style={styles.logo} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder='First Name'
+            placeholderTextColor={this.state.color}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            onChangeText={(text) => this.setState({ firstName: text })}
+            value={this.state.firstName}
+          />
 
-        <TextInput
-          placeholder='Last name'
-          placeholderTextColor={color}
-          style={styles.input}
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => setlName(text)}
-          value={lastName}
-        />
+          <TextInput
+            placeholder='Last name'
+            placeholderTextColor={this.state.color}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            onChangeText={(text) => this.setState({ lastName: text })}
+            value={this.state.lastName}
+          />
 
-        <TextInput
-          placeholder='Email'
-          keyboardType='email-address'
-          placeholderTextColor={color}
-          style={styles.input}
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        />
+          <TextInput
+            placeholder='Email'
+            keyboardType='email-address'
+            placeholderTextColor={this.state.color}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            onChangeText={(text) => this.setState({ email: text })}
+            value={this.state.email}
+          />
 
-        <TextInput
-          placeholder='Password'
-          secureTextEntry={true}
-          placeholderTextColor={color}
-          style={styles.input}
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
+          <TextInput
+            placeholder='Password'
+            secureTextEntry={true}
+            placeholderTextColor={this.state.color}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            onChangeText={(text) => this.setState({ password: text })}
+            value={this.state.password}
+          />
 
-        <TextInput
-          placeholder='Repeat Password'
-          secureTextEntry={true}
-          placeholderTextColor={color}
-          style={styles.input}
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => setPassword2(text)}
-          value={password2}
-        />
-      </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btnRegister} onPress={registerHandler}>
-          <Text style={styles.btnText}>Register</Text>
-        </TouchableOpacity>
+          <TextInput
+            placeholder='Repeat Password'
+            secureTextEntry={true}
+            placeholderTextColor={this.state.color}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            onChangeText={(text) => this.setState({ password2: text })}
+            value={this.state.password2}
+          />
+        </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.btnRegister}
+            onPress={this.registerHandler}
+          >
+            <Text style={styles.btnText}>Register</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.btnLogin}
-          onPress={() => props.navigation.navigate('Login')}
-        >
-          <Text style={{ ...styles.btnText, color: 'coral' }}>
-            Already registered
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
-  );
-};
+          <TouchableOpacity
+            style={styles.btnLogin}
+            onPress={() => props.navigation.navigate('Login')}
+          >
+            <Text style={{ ...styles.btnText, color: 'coral' }}>
+              Already registered
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   backgroundContainer: {
@@ -211,4 +204,12 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
-export default RegistrationScreen;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegister: (email, password, lastName, firstName) =>
+      dispatch(register({ email, password, lastName, firstName })),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RegistrationScreen);

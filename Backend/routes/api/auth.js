@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
 router.post('/register', async (req, res) => {
   //validate user before creation
   const { error } = registerValidation(req.body);
-
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
@@ -28,13 +27,12 @@ router.post('/register', async (req, res) => {
 
     let progress = new Progress({});
     await progress.save();
-    //create new user; oreder of fields HAS to be like in the reqest
+
     const user = new User({
       email: req.body.email,
       password: hashedPassword,
       lastName: req.body.lastName,
       firstName: req.body.firstName,
-      age: req.body.age,
       avatar: 'no avatar selected yet',
       progress: progress._id,
     });
