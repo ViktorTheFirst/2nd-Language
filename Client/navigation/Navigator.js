@@ -1,20 +1,21 @@
-import React from "react";
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer, createSwitchNavigator } from "react-navigation"; //wraps the main navigator
-import { createDrawerNavigator } from "react-navigation-drawer";
+import React from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'; //wraps the main navigator
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
-import MainScreen from "../screens/MainScreen";
-import LoginScreen from "../screens/LoginScreen";
-import RegistrationScreen from "../screens/RegistrationScreen";
-import SoundsScreen from "../screens/SoundsScreen";
-import WordsScreen from "../screens/WordsScreen";
-import StoryScreen from "../screens/StoryScreen";
-import SentencesScreen from "../screens/SentencesScreen";
-import PriceScreen from "../screens/PriceScreen";
-import AboutScreen from "../screens/AboutScreen";
-import Test from "../screens/Test";
-import AvatarSelectionScreen from "../screens/AvatarSelectionScreen";
-import { Ionicons } from "@expo/vector-icons";
+import MainScreen from '../screens/MainScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegistrationScreen from '../screens/RegistrationScreen';
+import SoundsScreen from '../screens/SoundsScreen';
+import WordsScreen from '../screens/WordsScreen';
+import StoryScreen from '../screens/StoryScreen';
+import SentencesScreen from '../screens/SentencesScreen';
+import PriceScreen from '../screens/PriceScreen';
+import AboutScreen from '../screens/AboutScreen';
+import Test from '../screens/Test';
+import AvatarSelectionScreen from '../screens/AvatarSelectionScreen';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import LogoutScreen from '../screens/LogoutScreen';
 
 //========================================================================================
 const LoginRegisterNav = createStackNavigator(
@@ -65,10 +66,10 @@ const drawerNav = createDrawerNavigator(
     main: {
       screen: MainScreen,
       navigationOptions: {
-        drawerLabel: "Lessons",
+        drawerLabel: 'Lessons',
 
         drawerIcon: () => {
-          return <Ionicons name="ios-paper" size={25} color="white" />;
+          return <Ionicons name='ios-paper' size={25} color='white' />;
         },
       },
     },
@@ -76,17 +77,29 @@ const drawerNav = createDrawerNavigator(
       screen: AboutScreen,
 
       navigationOptions: {
-        drawerLabel: "About",
+        drawerLabel: 'About',
         drawerIcon: () => {
           return (
-            <Ionicons name="ios-information-circle" size={25} color="white" />
+            <Ionicons name='ios-information-circle' size={25} color='white' />
+          );
+        },
+      },
+    },
+    logout: {
+      screen: LogoutScreen,
+
+      navigationOptions: {
+        drawerLabel: 'Logout',
+        drawerIcon: () => {
+          return (
+            <MaterialCommunityIcons name='logout' size={25} color='white' />
           );
         },
       },
     },
   },
   {
-    drawerBackgroundColor: "#5ebb77",
+    drawerBackgroundColor: '#5ebb77',
     defaultNavigationOptions: {
       headerShown: false,
     },

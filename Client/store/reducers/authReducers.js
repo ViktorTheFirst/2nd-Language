@@ -1,12 +1,12 @@
-import { REGISTER, LOGIN } from "../actions/const";
+import { REGISTER, LOGIN, LOGOUT } from '../actions/const';
 
 const initialState = {
-  token: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  age: "",
-  avatar: "",
+  token: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  age: '',
+  avatar: '',
 };
 
 const authReducer = (state = initialState, action) => {
@@ -20,6 +20,9 @@ const authReducer = (state = initialState, action) => {
         token: action.payload.token,
         email: action.payload.email,
       };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

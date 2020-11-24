@@ -377,6 +377,7 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
+    zIndex: -1
   },
   questionImage: {
     width: 160,

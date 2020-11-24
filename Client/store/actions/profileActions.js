@@ -1,5 +1,5 @@
 import { GET_USER, UPDATE_AVATAR, UPDATE_PROGRESS } from './const';
-const yourIPadress = 'http://192.168.0.86:5000';
+const yourIPadress = 'http://192.168.0.87:5000';
 
 export const get_user = (email) => async (dispatch) => {
   try {

@@ -45,7 +45,7 @@ class RegistrationScreen extends Component {
         lastName,
         firstName
       );
-      //await dispatch(getprofile());
+
       if (token) {
         this.props.navigation.navigate('Login');
       }
@@ -118,7 +118,7 @@ class RegistrationScreen extends Component {
 
           <TouchableOpacity
             style={styles.btnLogin}
-            onPress={() => props.navigation.navigate('Login')}
+            onPress={() => this.props.navigation.navigate('Login')}
           >
             <Text style={{ ...styles.btnText, color: 'coral' }}>
               Already registered

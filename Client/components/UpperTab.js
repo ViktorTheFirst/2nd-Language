@@ -12,18 +12,18 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 import * as Progress from 'react-native-progress';
 
 const UpperTab = (props) => {
-  const { soundLvl, wordLvl, sentenceLvl, storyLvl } = props.progress;
-
-  const [barProg, setBarProg] = useState(0);
+  const [barProg, setBarProg] = useState(0.1);
   const calculateBarProg = () => {
+    const { wordLvl, soundLvl, sentenceLvl, storyLvl } = props.progress;
     const numOfLessons = 7;
-    const lessonsDone = soundLvl + wordLvl + sentenceLvl + storyLvl - 4;
+    const lessonsDone = wordLvl + soundLvl + sentenceLvl + storyLvl - 4;
     setBarProg(lessonsDone / numOfLessons);
   };
 
   useEffect(() => {
-    console.log('[UpperTab] - useEffect');
-    calculateBarProg();
+    if (props.progress) {
+      calculateBarProg();
+    }
   });
 
   return (
@@ -44,7 +44,7 @@ const UpperTab = (props) => {
           color='pink'
           progress={barProg}
           width={WIDTH / 1.75}
-          height={14}
+          height={15}
           borderRadius={7}
           borderWidth={3}
           borderColor='white'
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 70,
     height: 70,
-    borderRadius: 100 / 2,
+    borderRadius: 60 / 2,
     borderColor: 'white',
     borderWidth: 4,
   },

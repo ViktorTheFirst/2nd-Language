@@ -1,6 +1,6 @@
-import { REGISTER, LOGIN } from './const';
+import { REGISTER, LOGIN, LOGOUT } from './const';
 
-const yourIPadress = 'http://192.168.0.86:5000';
+const yourIPadress = 'http://192.168.0.87:5000';
 
 //===========================================================================================
 export const register = (data) => async (dispatch) => {
@@ -64,4 +64,10 @@ export const login = (data) => async (dispatch) => {
   } catch (err) {
     throw err;
   }
+};
+
+//===========================================================================================
+
+export const logout = () => {
+  return { type: LOGOUT };
 };

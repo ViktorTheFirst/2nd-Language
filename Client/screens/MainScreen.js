@@ -38,10 +38,10 @@ const DATA = [
     title: 'Sounds',
     lessonNum: '3',
     screen: 'sounds',
-    questionSound: 'ba',
-    answer_1_sound: 'piano',
-    answer_2_sound: 'banana',
-    answer_3_sound: 'lion',
+    questionSound: 'po',
+    answer_1_sound: 'turtle',
+    answer_2_sound: 'hippo',
+    answer_3_sound: 'basket',
   },
   {
     id: '4',
@@ -49,8 +49,8 @@ const DATA = [
     lessonNum: '1',
     screen: 'words',
     questionSound: 'monkey',
-    answer_1_sound: 'hippo',
-    answer_2_sound: 'turtle',
+    answer_1_sound: 'boy',
+    answer_2_sound: 'clock',
     answer_3_sound: 'monkey',
   },
   {
@@ -59,8 +59,8 @@ const DATA = [
     lessonNum: '2',
     screen: 'words',
     questionSound: 'crocodile',
-    answer_1_sound: 'piano',
-    answer_2_sound: 'basket',
+    answer_1_sound: 'snake',
+    answer_2_sound: 'bear',
     answer_3_sound: 'crocodile',
   },
   {
@@ -70,7 +70,7 @@ const DATA = [
     screen: 'sentence',
     questionSound: 'a_monkey_eating_a_banana',
     answer_1_sound: 'a_boy_eating_dinner',
-    answer_2_sound: 'a_green_crocodile',
+    answer_2_sound: 'little_yellow_bird',
     answer_3_sound: 'a_monkey_eating_a_banana',
   },
   {
@@ -88,15 +88,15 @@ class MainScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log('[MainScreen] - componentDidMount');
+    //console.log('[MainScreen] - componentDidMount');
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.progress !== this.props.progress) {
-      console.log('[MainScreen] - shouldComponentUpdate - TRUE');
+      //console.log('[MainScreen] - shouldComponentUpdate - TRUE');
       return true;
     }
-    console.log('[MainScreen] - shouldComponentUpdate - FALSE');
+    //console.log('[MainScreen] - shouldComponentUpdate - FALSE');
     return false;
   }
 

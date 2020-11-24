@@ -36,7 +36,7 @@ const images = {
     },
     answer3: {
       path1: require('../assets/images/p2.png'),
-      path2: require('../assets/lesson_images/crocodile.jpg'),
+      path2: require('../assets/lesson_images/crocodile.png'),
     },
   },
   sentanceScreenImages: {
@@ -58,23 +58,28 @@ const images = {
 const images2 = {
   //=======================FULL WORDS========================
   piano: require('../assets/lesson_images/piano.png'),
+  
   banana: require('../assets/lesson_images/banana.png'),
-  basket: require('../assets/lesson_images/basket.jpg'),
-  crocodile: require('../assets/lesson_images/crocodile.jpg'),
-  dinner: require('../assets/lesson_images/dinner.jpg'),
+  basket: require('../assets/lesson_images/basket.png'),
+  crocodile: require('../assets/lesson_images/crocodile.png'),
+  dinner: require('../assets/lesson_images/dinner.png'),
   lion: require('../assets/lesson_images/lion.png'),
   monkey: require('../assets/lesson_images/monkey.png'),
   jupiter: require('../assets/lesson_images/p2.png'),
   saturn: require('../assets/lesson_images/p1.png'),
   rocket: require('../assets/lesson_images/rocket.png'),
   spot: require('../assets/lesson_images/spot.png'),
-  stairs: require('../assets/lesson_images/stairs.jpg'),
+  stairs: require('../assets/lesson_images/stairs.png'),
   yellow: require('../assets/lesson_images/yellow.png'),
-  hippo: require('../assets/lesson_images/hippo.jpg'),
-  turtle: require('../assets/lesson_images/turtle.jpg'),
+  hippo: require('../assets/lesson_images/hippo.png'),
+  turtle: require('../assets/lesson_images/turtle.png'),
+  boy: require('../assets/lesson_images/boy.png'),
+  clock: require('../assets/lesson_images/clock.png'),
+  bear: require('../assets/lesson_images/bear.png'),
+  snake: require('../assets/lesson_images/snake.png'),
   //=========================SENTENCES==================
-  a_green_crocodile: require('../assets/lesson_images/a_green_crocodile.png'),
-  a_monkey_eating_a_banana: require('../assets/lesson_images/a_monkey_eating_a_banana.jpg'),
+  little_yellow_bird: require('../assets/lesson_images/little_yellow_bird.png'),
+  a_monkey_eating_a_banana: require('../assets/lesson_images/a_monkey_eating_a_banana.png'),
   a_boy_eating_dinner: require('../assets/lesson_images/a_boy_eating_dinner.png'),
   //===========================STORY====================
   one_two_three: require('../assets/lesson_images/one_two_three.jpg'),

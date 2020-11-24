@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Audio } from "expo-av";
-import { images } from "../constants/imageExport";
-import { sounds } from "../constants/soundExport";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Audio } from 'expo-av';
+import { images } from '../constants/imageExport';
+import { sounds } from '../constants/soundExport';
 
 const AnswerContainer = (props) => {
   const [isSelected, setIsSelected] = useState(false);
@@ -23,10 +23,9 @@ const AnswerContainer = (props) => {
   const [questionSound, setQuestionSound] = useState(new Audio.Sound());
   const [answerSound, setAnswerSound] = useState(new Audio.Sound());
   useEffect(() => {
-    console.log("USE EFFECT ACTIVATED");
     try {
       questionSound.loadAsync(
-        require("..//assets/sounds/ba.wav"),
+        require('..//assets/sounds/ba.wav'),
         {
           shouldPlay: false,
           volume: 1.0,
@@ -36,7 +35,7 @@ const AnswerContainer = (props) => {
         true
       );
       answerSound.loadAsync(
-        require("..//assets/sounds/piano.wav"),
+        require('..//assets/sounds/piano.wav'),
         {
           shouldPlay: false,
           volume: 1.0,
@@ -46,7 +45,7 @@ const AnswerContainer = (props) => {
         true
       );
     } catch (err) {
-      console.log("Could not load sounds in AnswerContainer", err);
+      console.log('Could not load sounds in AnswerContainer', err);
     }
   }, [questionSound, answerSound]);
 
@@ -78,7 +77,7 @@ const AnswerContainer = (props) => {
       await answerSound.setPositionAsync(0);
       await setIsSelected(true);
     } catch (err) {
-      console.log("Cant play audio", err);
+      console.log('Cant play audio', err);
     }
   };
 
@@ -90,7 +89,7 @@ const AnswerContainer = (props) => {
       <TouchableOpacity
         style={styles.imageContainer}
         onPress={() => {
-          playAnswer("viktor");
+          playAnswer('viktor');
         }}
       >
         <Image source={imgSrc} style={styles.image} />
@@ -102,7 +101,7 @@ const AnswerContainer = (props) => {
 const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     //backgroundColor: "purple",
   },
   imageContainer: {
@@ -115,9 +114,9 @@ const styles = StyleSheet.create({
   },
   questionText: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "purple",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'purple',
   },
 });
 

@@ -30,7 +30,6 @@ class LoginScreen extends Component {
   }
 
   loginHandler = async () => {
-    console.log('LOGIN');
     try {
       await this.props.onLogin(this.state.email, this.state.password);
       await this.props.onGetUser(this.state.email); // this server call insures avatar is up to date in redux store
