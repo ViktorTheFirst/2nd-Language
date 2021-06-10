@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import { enableScreens } from "react-native-screens";
-import * as Font from "expo-font";
-import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
-import LoginScreen from "./screens/LoginScreen";
-import Navigator from "./navigation/Navigator";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import authReducer from "./store/reducers/authReducers";
-import profileReducer from "./store/reducers/profileReducers";
-import { Provider } from "react-redux";
-import ReduxThunk from "redux-thunk";
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { enableScreens } from 'react-native-screens';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo'; //prolongs app start untill fonts loaded
+import Navigator from './navigation/Navigator';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import authReducer from './store/reducers/authReducers';
+import profileReducer from './store/reducers/profileReducers';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 
 enableScreens(); //preformance optinization
 const rootReducer = combineReducers({
@@ -20,8 +19,8 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    "dancing-script": require("./assets/fonts/DancingScript-Bold.ttf"),
-    "averia-libre": require("./assets/fonts/AveriaLibre-Regular.ttf"),
+    'dancing-script': require('./assets/fonts/DancingScript-Bold.ttf'),
+    'averia-libre': require('./assets/fonts/AveriaLibre-Regular.ttf'),
   });
 };
 

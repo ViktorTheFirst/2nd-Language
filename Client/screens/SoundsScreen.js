@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
-    zIndex: -1
+    zIndex: -1,
   },
   questionImage: {
     width: 160,
@@ -411,8 +411,6 @@ const styles = StyleSheet.create({
   },
   backgroundContainer: {
     flex: 1,
-    //justifyContent: "center",
-    //alignItems: "center",
     flexDirection: 'column',
   },
   header: {
@@ -431,16 +429,13 @@ const styles = StyleSheet.create({
   answer2TextContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    //backgroundColor: "coral",
   },
   answer3TextContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    //backgroundColor: "indigo",
   },
   textContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    //backgroundColor: "purple",
   },
 });

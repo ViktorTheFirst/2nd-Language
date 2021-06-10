@@ -1,6 +1,6 @@
 import { REGISTER, LOGIN, LOGOUT } from './const';
 
-const yourIPadress = 'http://192.168.0.87:5000';
+const yourIPadress = 'http://172.20.4.33:5000';
 
 //===========================================================================================
 export const register = (data) => async (dispatch) => {
@@ -36,6 +36,7 @@ export const register = (data) => async (dispatch) => {
 //===========================================================================================
 
 export const login = (data) => async (dispatch) => {
+  console.log('INSIDE login action - data: ', data);
   try {
     const loginToken = await fetch(`${yourIPadress}/api/auth/login`, {
       method: 'POST',
@@ -45,13 +46,15 @@ export const login = (data) => async (dispatch) => {
       },
       body: JSON.stringify(data),
     });
-
+    //console.log('loginToken: ', JSON.stringify(loginToken));
     if (!loginToken.ok) {
-      const errorResData = await loginToken.json();
+      return 'Login server error';
+      /* const errorResData = await loginToken.json();
+      //console.log('errorResData: ', JSON.stringify(errorResData));
       let message = 'Login failed';
       if (errorResData && errorResData.errors.length > 0)
         message = errorResData.errors[0].msg;
-      throw new Error(message);
+      throw new Error(message); */
     }
 
     let jsonToken = await loginToken.json();

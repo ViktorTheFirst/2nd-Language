@@ -58,15 +58,16 @@ router.post('/register', async (req, res) => {
 //===========================================================================================
 router.post('/login', async (req, res) => {
   console.log('INSIDE auth login');
-  //console.log("req.body: ", req.body);
-
-  const { error } = loginValidation(req.body);
-
-  if (error) return res.status(400).json({ errors: error.details[0].message });
+  console.log('req.body: ', req.body);
 
   try {
+    const { error } = loginValidation(req.body);
+    console.log('error from loginValidation: ', error);
+    if (error)
+      return res.status(400).json({ errors: error.details[0].message });
     //check if email exists in DB
     const user = await User.findOne({ email: req.body.email });
+    console.log('FOUND USER: ', user);
     if (!user)
       return res
         .status(400)

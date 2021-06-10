@@ -1,5 +1,5 @@
 import { GET_USER, UPDATE_AVATAR, UPDATE_PROGRESS } from './const';
-const yourIPadress = 'http://192.168.0.87:5000';
+const yourIPadress = 'http://172.20.4.33:5000';
 
 export const get_user = (email) => async (dispatch) => {
   try {
@@ -19,7 +19,7 @@ export const get_user = (email) => async (dispatch) => {
       throw new Error(message);
     }
     const serverData = await res.json();
-
+    //console.log('inside profileActions serverData: ', serverData);
     dispatch({
       type: GET_USER,
       payload: serverData,

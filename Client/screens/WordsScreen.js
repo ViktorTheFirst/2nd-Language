@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: "orange",
+    //backgroundColor: 'orange',
   },
   freeSpace: {
     flex: 1,

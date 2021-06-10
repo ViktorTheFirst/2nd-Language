@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { login } from '../store/actions/authActions';
@@ -29,17 +30,36 @@ class LoginScreen extends Component {
     );
   }
 
+  alertHandler = (err) => {
+    Alert.alert('Login Error', err, [
+      {
+        text: 'Got it!',
+        style: 'destructive',
+      },
+    ]);
+  };
+
   loginHandler = async () => {
+    console.log('INSIDE loginHandler');
+    const { email, password } = this.state;
+    if (email === '' || password === '') {
+      this.alertHandler('Both fields must be filled');
+      return;
+    }
     try {
-      await this.props.onLogin(this.state.email, this.state.password);
-      await this.props.onGetUser(this.state.email); // this server call insures avatar is up to date in redux store
+      const result = await this.props.onLogin(email, password);
+
+      if (result === 'Login server error') {
+        this.alertHandler('Wrong credentials given');
+      }
+      await this.props.onGetUser(email); // this server call insures avatar is up to date in redux store
       //change to LANDSCAPE
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.LANDSCAPE
       );
       this.props.navigation.navigate('avatar');
     } catch (err) {
-      console.log(err);
+      console.log('ERROR while logging in: ' + err);
     }
   };
 

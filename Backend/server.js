@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 connectDB();
 
 app.use(express.json({ extended: false }));
+app.use(express.json());
 app.use(bodyParser.json());
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
