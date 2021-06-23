@@ -1,6 +1,6 @@
 import { REGISTER, LOGIN, LOGOUT } from './const';
 
-const yourIPadress = 'http://172.20.4.33:5000';
+const yourIPadress = 'http://10.0.0.2:5000';
 
 //===========================================================================================
 export const register = (data) => async (dispatch) => {
