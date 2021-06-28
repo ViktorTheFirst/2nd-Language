@@ -68,7 +68,7 @@ const images2 = {
   jupiter: require('../assets/lesson_images/p2.png'),
   saturn: require('../assets/lesson_images/p1.png'),
   rocket: require('../assets/lesson_images/rocket.png'),
-  spot: require('../assets/lesson_images/spot.png'),
+  //spot: require('../assets/lesson_images/spot.png'),
   stairs: require('../assets/lesson_images/stairs.png'),
   yellow: require('../assets/lesson_images/yellow.png'),
   hippo: require('../assets/lesson_images/hippo.png'),
